@@ -170,6 +170,9 @@
       align-items: center;
       gap: 12px;
       min-width: 0;
+      position: relative;
+      z-index: 2202;
+      flex-shrink: 0;
     }
 
     .brand img {
@@ -247,7 +250,7 @@
       border-radius: 14px;
       background: var(--card);
       box-shadow: var(--shadow-soft);
-      z-index: 1004;
+      z-index: 2203;
     }
 
     .menu-toggle span {
@@ -1462,6 +1465,8 @@
         padding: 12px 0;
         font-size: 1.08rem;
         letter-spacing: 0.08em;
+        opacity: 1;
+        visibility: visible;
       }
 
       .nav-links a:active {
@@ -2240,21 +2245,33 @@
       document.body.classList.add("menu-open");
       menuToggle.setAttribute("aria-expanded", "true");
       menuOverlay.style.pointerEvents = "auto";
+      gsap.killTweensOf([navLinks, menuOverlay, navLinks.querySelectorAll("a")]);
+      gsap.set(navLinks.querySelectorAll("a"), {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        visibility: "visible"
+      });
 
       gsap.timeline({
         defaults: { ease: "power3.out" },
         onComplete: () => {
           gsap.set(navLinks.querySelectorAll("a"), {
             opacity: 1,
-            x: 0
+            x: 0,
+            y: 0,
+            visibility: "visible"
           });
         }
       })
         .to(menuOverlay, { opacity: 1, duration: 0.3 }, 0)
         .to(navLinks, { xPercent: 0, duration: 0.4 }, 0)
-        .from(navLinks.querySelectorAll("a"), {
+        .fromTo(navLinks.querySelectorAll("a"), {
           y: 10,
-          opacity: 0,
+          opacity: 0
+        }, {
+          y: 0,
+          opacity: 1,
           duration: 0.3,
           stagger: 0.05
         }, 0.1);
@@ -2266,6 +2283,7 @@
       menuToggle.classList.remove("active");
       document.body.classList.remove("menu-open");
       menuToggle.setAttribute("aria-expanded", "false");
+      gsap.killTweensOf([navLinks, menuOverlay, navLinks.querySelectorAll("a")]);
 
       gsap.timeline({
         defaults: { ease: "power3.inOut" },
@@ -2273,7 +2291,9 @@
           menuOverlay.style.pointerEvents = "none";
           gsap.set(navLinks.querySelectorAll("a"), {
             opacity: 1,
-            x: 0
+            x: 0,
+            y: 0,
+            visibility: "visible"
           });
         }
       })
@@ -2302,12 +2322,14 @@
         menuOverlay.style.pointerEvents = "none";
         gsap.set(menuOverlay, { opacity: 0 });
         gsap.set(navLinks, { xPercent: 0 });
-        gsap.set(navLinks.querySelectorAll("a"), { opacity: 1, x: 0 });
+        gsap.set(navLinks.querySelectorAll("a"), { opacity: 1, x: 0, y: 0, visibility: "visible" });
       } else if (!menuOpen) {
         gsap.set(navLinks, { xPercent: 100 });
         gsap.set(navLinks.querySelectorAll("a"), {
           opacity: 1,
-          x: 0
+          x: 0,
+          y: 0,
+          visibility: "visible"
         });
       }
     });
