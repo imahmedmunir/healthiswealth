@@ -139,7 +139,7 @@
     .nav {
       position: fixed;
       inset: 0 0 auto;
-      z-index: 1000;
+      z-index: 2100;
       height: 88px;
       border-bottom: 1px solid transparent;
       background: rgba(255, 255, 255, 0.78);
@@ -276,7 +276,7 @@
     .menu-overlay {
       position: fixed;
       inset: 0;
-      z-index: 900;
+      z-index: 1500;
       pointer-events: none;
       background: rgba(10, 10, 10, 0.22);
       opacity: 0;
@@ -1444,7 +1444,7 @@
         width: min(360px, 86vw);
         height: 100vh;
         height: 100dvh;
-        z-index: 1002;
+        z-index: 2000;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
@@ -2125,8 +2125,12 @@
     const isMobile = window.matchMedia("(max-width: 880px)");
     let menuOpen = false;
 
-    gsap.set(navLinks, { xPercent: isMobile.matches ? 100 : 0 });
-    gsap.set(navLinks.querySelectorAll("a"), { opacity: isMobile.matches ? 0 : 1, x: isMobile.matches ? 18 : 0 });
+    if (isMobile.matches) {
+      gsap.set(navLinks, { xPercent: 100 });
+      gsap.set(navLinks.querySelectorAll("a"), { opacity: 1, x: 0 });
+    } else {
+      gsap.set(navLinks, { xPercent: 0 });
+    }
 
     const loadTimeline = gsap.timeline({
       defaults: { ease: "power3.out" },
@@ -2237,10 +2241,23 @@
       menuToggle.setAttribute("aria-expanded", "true");
       menuOverlay.style.pointerEvents = "auto";
 
-      gsap.timeline({ defaults: { ease: "power3.out" } })
-        .to(menuOverlay, { opacity: 1, duration: 0.28 }, 0)
-        .to(navLinks, { xPercent: 0, duration: 0.46 }, 0)
-        .fromTo(navLinks.querySelectorAll("a"), { opacity: 0, x: 18 }, { opacity: 1, x: 0, duration: 0.42, stagger: 0.055 }, 0.18);
+      gsap.timeline({
+        defaults: { ease: "power3.out" },
+        onComplete: () => {
+          gsap.set(navLinks.querySelectorAll("a"), {
+            opacity: 1,
+            x: 0
+          });
+        }
+      })
+        .to(menuOverlay, { opacity: 1, duration: 0.3 }, 0)
+        .to(navLinks, { xPercent: 0, duration: 0.4 }, 0)
+        .from(navLinks.querySelectorAll("a"), {
+          y: 10,
+          opacity: 0,
+          duration: 0.3,
+          stagger: 0.05
+        }, 0.1);
     }
 
     function closeMenu() {
@@ -2254,10 +2271,12 @@
         defaults: { ease: "power3.inOut" },
         onComplete: () => {
           menuOverlay.style.pointerEvents = "none";
-          gsap.set(navLinks.querySelectorAll("a"), { opacity: 0, x: 18 });
+          gsap.set(navLinks.querySelectorAll("a"), {
+            opacity: 1,
+            x: 0
+          });
         }
       })
-        .to(navLinks.querySelectorAll("a"), { opacity: 0, x: 14, duration: 0.18, stagger: { each: 0.025, from: "end" } }, 0)
         .to(navLinks, { xPercent: 100, duration: 0.34 }, 0.06)
         .to(menuOverlay, { opacity: 0, duration: 0.26 }, 0.06);
     }
@@ -2286,7 +2305,10 @@
         gsap.set(navLinks.querySelectorAll("a"), { opacity: 1, x: 0 });
       } else if (!menuOpen) {
         gsap.set(navLinks, { xPercent: 100 });
-        gsap.set(navLinks.querySelectorAll("a"), { opacity: 0, x: 18 });
+        gsap.set(navLinks.querySelectorAll("a"), {
+          opacity: 1,
+          x: 0
+        });
       }
     });
 
