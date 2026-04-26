@@ -139,7 +139,7 @@
     .nav {
       position: fixed;
       inset: 0 0 auto;
-      z-index: 2100;
+      z-index: 3000;
       height: 88px;
       border-bottom: 1px solid transparent;
       background: rgba(255, 255, 255, 0.78);
@@ -215,6 +215,9 @@
       letter-spacing: 0.11em;
       text-transform: uppercase;
       transition: color 0.25s ease, transform 0.25s ease;
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
     }
 
     .nav-links a::after {
@@ -279,7 +282,7 @@
     .menu-overlay {
       position: fixed;
       inset: 0;
-      z-index: 1500;
+      z-index: 2000;
       pointer-events: none;
       background: rgba(10, 10, 10, 0.22);
       opacity: 0;
@@ -1447,7 +1450,7 @@
         width: min(360px, 86vw);
         height: 100vh;
         height: 100dvh;
-        z-index: 2000;
+        z-index: 2500;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
@@ -2130,9 +2133,8 @@
     const isMobile = window.matchMedia("(max-width: 880px)");
     let menuOpen = false;
 
-    if (isMobile.matches) {
+    if (window.innerWidth <= 880) {
       gsap.set(navLinks, { xPercent: 100 });
-      gsap.set(navLinks.querySelectorAll("a"), { opacity: 1, x: 0 });
     } else {
       gsap.set(navLinks, { xPercent: 0 });
     }
@@ -2241,64 +2243,56 @@
     function openMenu() {
       if (menuOpen) return;
       menuOpen = true;
+
       menuToggle.classList.add("active");
       document.body.classList.add("menu-open");
-      menuToggle.setAttribute("aria-expanded", "true");
       menuOverlay.style.pointerEvents = "auto";
-      gsap.killTweensOf([navLinks, menuOverlay, navLinks.querySelectorAll("a")]);
-      gsap.set(navLinks.querySelectorAll("a"), {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        visibility: "visible"
+
+      menuToggle.setAttribute("aria-expanded", "true");
+      gsap.killTweensOf([navLinks, menuOverlay]);
+
+      const links = navLinks.querySelectorAll("a");
+      links.forEach(link => {
+        link.style.opacity = "1";
+        link.style.transform = "none";
+        link.style.visibility = "visible";
       });
 
-      gsap.timeline({
-        defaults: { ease: "power3.out" },
-        onComplete: () => {
-          gsap.set(navLinks.querySelectorAll("a"), {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            visibility: "visible"
-          });
-        }
-      })
-        .to(menuOverlay, { opacity: 1, duration: 0.3 }, 0)
-        .to(navLinks, { xPercent: 0, duration: 0.4 }, 0)
-        .fromTo(navLinks.querySelectorAll("a"), {
-          y: 10,
-          opacity: 0
-        }, {
-          y: 0,
-          opacity: 1,
-          duration: 0.3,
-          stagger: 0.05
-        }, 0.1);
+      gsap.to(navLinks, {
+        xPercent: 0,
+        duration: 0.4,
+        ease: "power3.out"
+      });
+
+      gsap.to(menuOverlay, {
+        opacity: 1,
+        duration: 0.3
+      });
     }
 
     function closeMenu() {
       if (!menuOpen) return;
       menuOpen = false;
+
       menuToggle.classList.remove("active");
       document.body.classList.remove("menu-open");
       menuToggle.setAttribute("aria-expanded", "false");
-      gsap.killTweensOf([navLinks, menuOverlay, navLinks.querySelectorAll("a")]);
 
-      gsap.timeline({
-        defaults: { ease: "power3.inOut" },
+      gsap.killTweensOf([navLinks, menuOverlay]);
+
+      gsap.to(navLinks, {
+        xPercent: 100,
+        duration: 0.35,
+        ease: "power3.inOut"
+      });
+
+      gsap.to(menuOverlay, {
+        opacity: 0,
+        duration: 0.25,
         onComplete: () => {
           menuOverlay.style.pointerEvents = "none";
-          gsap.set(navLinks.querySelectorAll("a"), {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            visibility: "visible"
-          });
         }
-      })
-        .to(navLinks, { xPercent: 100, duration: 0.34 }, 0.06)
-        .to(menuOverlay, { opacity: 0, duration: 0.26 }, 0.06);
+      });
     }
 
     menuToggle.addEventListener("click", () => {
@@ -2322,15 +2316,8 @@
         menuOverlay.style.pointerEvents = "none";
         gsap.set(menuOverlay, { opacity: 0 });
         gsap.set(navLinks, { xPercent: 0 });
-        gsap.set(navLinks.querySelectorAll("a"), { opacity: 1, x: 0, y: 0, visibility: "visible" });
       } else if (!menuOpen) {
         gsap.set(navLinks, { xPercent: 100 });
-        gsap.set(navLinks.querySelectorAll("a"), {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          visibility: "visible"
-        });
       }
     });
 
