@@ -3,26 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Health is Wealth Gym | Main Qasimabad, Neroon Kot Tower</title>
-  <meta name="description" content="Health is Wealth Gym at Main Qasimabad, Neroon Kot Tower, Hyderabad. Real gym, real trainers, real results. Join on WhatsApp." />
+  <title>Health is Wealth Gym | Main Qasimabad</title>
+  <meta name="description" content="Health is Wealth Gym in Main Qasimabad, Hyderabad. Trusted trainers, modern equipment, separate timings, and a premium fitness experience." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <style>
     :root {
-      --bg: #F8FAFC;
-      --card: #FFFFFF;
-      --accent: #1E90FF;
-      --accent-2: #00C2FF;
-      --text: #0A0A0A;
-      --muted: #6B7280;
-      --whatsapp: #25D366;
-      --line: rgba(10, 10, 10, 0.10);
-      --shadow: 0 18px 55px rgba(10, 10, 10, 0.10);
-      --shadow-soft: 0 10px 30px rgba(10, 10, 10, 0.08);
-      --max: min(1180px, calc(100vw - 40px));
+      --bg-0: #050505;
+      --bg-1: #0d0d0f;
+      --bg-2: #131316;
+      --card: rgba(255, 255, 255, 0.06);
+      --stroke: rgba(255, 255, 255, 0.15);
+      --text: #f5f7fa;
+      --muted: #b5bbc5;
+      --gold: #f5b942;
+      --red: #ff3b3b;
+      --trust: #67d897;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      --radius: 18px;
+      --nav-h: 78px;
+      --surface-glow: radial-gradient(circle at 10% 10%, rgba(245, 185, 66, 0.15), transparent 35%),
+        radial-gradient(circle at 90% 90%, rgba(255, 59, 59, 0.12), transparent 35%);
     }
 
     * {
@@ -33,31 +40,23 @@
 
     html {
       scroll-behavior: smooth;
-      background: var(--bg);
     }
 
     body {
-      min-height: 100vh;
-      overflow-x: hidden;
-      font-family: "Inter", system-ui, sans-serif;
+      font-family: "Manrope", sans-serif;
+      background: linear-gradient(180deg, var(--bg-0), var(--bg-1));
       color: var(--text);
-      background: var(--bg);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      transition: background 0.6s ease;
     }
 
-    body.is-loading,
     body.menu-open {
       overflow: hidden;
     }
 
-    img,
-    svg {
-      display: block;
-    }
-
     img {
       max-width: 100%;
+      display: block;
     }
 
     a {
@@ -65,99 +64,206 @@
       text-decoration: none;
     }
 
-    button {
-      border: 0;
-      font: inherit;
-    }
-
-    a,
-    button,
-    .card,
-    .facility,
-    .gallery-item,
-    .people-card,
-    .join-card,
-    .review,
-    .timing-card,
-    .contact-item,
-    .faq-item {
-      -webkit-tap-highlight-color: transparent;
-    }
-
     .container {
-      width: var(--max);
+      width: min(1180px, 92vw);
       margin-inline: auto;
-      position: relative;
-      z-index: 2;
     }
 
-    .loader {
+    .section {
+      padding: 84px 0;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--surface-glow);
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .section-tag {
+      display: inline-block;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    h1,
+    h2,
+    h3,
+    .display {
+      font-family: "Bebas Neue", sans-serif;
+      letter-spacing: 0.02em;
+      line-height: 0.98;
+      font-weight: 400;
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      margin-bottom: 18px;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: clamp(0.98rem, 1.1vw, 1.08rem);
+    }
+
+    /* Fullscreen cinematic loader */
+    #loader {
       position: fixed;
       inset: 0;
       z-index: 9999;
       display: grid;
       place-items: center;
-      background: var(--bg);
+      background: radial-gradient(circle at 20% 20%, rgba(245, 185, 66, 0.18), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 59, 59, 0.15), transparent 40%),
+        #050505;
     }
 
-    .loader-box {
-      width: min(340px, 78vw);
+    .loader-content {
+      width: min(540px, 84vw);
+      text-align: center;
+    }
+
+    .loader-dumbbell {
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      border: 2px solid rgba(245, 185, 66, 0.45);
       display: grid;
-      justify-items: center;
-      gap: 20px;
+      place-items: center;
+      position: relative;
+      animation: spinDumbbell 1.4s linear infinite;
+      box-shadow: 0 0 24px rgba(245, 185, 66, 0.25);
     }
 
-    .loader img {
-      width: 112px;
-      filter: drop-shadow(0 12px 26px rgba(10, 10, 10, 0.12));
+    .loader-dumbbell::before,
+    .loader-dumbbell::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 22px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, var(--gold), #c98f2f);
+      top: 50%;
+      transform: translateY(-50%);
     }
 
-    .loader p {
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-weight: 900;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+    .loader-dumbbell::before {
+      left: 10px;
     }
 
-    .progress {
-      width: 100%;
+    .loader-dumbbell::after {
+      right: 10px;
+    }
+
+    .loader-dumbbell span {
+      width: 28px;
       height: 4px;
-      overflow: hidden;
       border-radius: 999px;
-      background: rgba(30, 144, 255, 0.14);
-    }
-
-    .progress span {
+      background: #f6d792;
       display: block;
-      width: 0%;
+    }
+
+    @keyframes spinDumbbell {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loader-logo {
+      width: 86px;
+      margin-inline: auto;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 16px rgba(245, 185, 66, 0.4));
+      animation: pulseLogo 1.3s ease-in-out infinite;
+    }
+
+    @keyframes pulseLogo {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.06);
+      }
+    }
+
+    .loader-title {
+      font-family: "Bebas Neue", sans-serif;
+      letter-spacing: 0.1em;
+      font-size: clamp(1.9rem, 5vw, 3rem);
+      margin-bottom: 20px;
+    }
+
+    .loader-bar-wrap {
+      height: 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 185, 66, 0.45);
+      background: rgba(255, 255, 255, 0.07);
+      overflow: hidden;
+      box-shadow: 0 0 24px rgba(245, 185, 66, 0.2);
+    }
+
+    .loader-bar {
+      width: 0;
       height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
       border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold), var(--red));
+      box-shadow: 0 0 18px rgba(245, 185, 66, 0.45);
+      will-change: width;
     }
 
-    .nav {
+    .loader-percent {
+      margin-top: 16px;
+      color: #fbe7bc;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .loader-sequence {
+      margin-top: 10px;
+      font-size: 0.84rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f0cf8a;
+      min-height: 18px;
+    }
+
+    #site-content {
+      opacity: 0;
+    }
+
+    /* Navigation */
+    .navbar {
       position: fixed;
-      inset: 0 0 auto;
-      z-index: 3000;
-      height: 88px;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      transition: background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease;
       border-bottom: 1px solid transparent;
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(18px);
-      transition: height 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
-    .nav.scrolled {
-      height: 70px;
-      background: var(--card);
-      border-color: var(--line);
-      backdrop-filter: blur(24px);
-      box-shadow: 0 12px 34px rgba(10, 10, 10, 0.09);
+    .navbar.scrolled {
+      background: rgba(7, 7, 8, 0.9);
+      border-color: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
     }
 
     .nav-inner {
-      width: var(--max);
-      height: 100%;
+      width: min(1240px, 94vw);
       margin-inline: auto;
       display: flex;
       align-items: center;
@@ -166,2304 +272,1962 @@
     }
 
     .brand {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 12px;
       min-width: 0;
-      position: relative;
-      z-index: 2202;
-      flex-shrink: 0;
     }
 
     .brand img {
-      width: 52px;
-      height: 52px;
-      object-fit: contain;
-      filter: drop-shadow(0 8px 16px rgba(10, 10, 10, 0.12));
-      transition: width 0.3s ease, height 0.3s ease, transform 0.25s ease;
-    }
-
-    .brand:hover img {
-      transform: scale(1.06);
-    }
-
-    .nav.scrolled .brand img {
       width: 44px;
       height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 18px rgba(245, 185, 66, 0.35);
     }
 
-    .brand span {
-      font-size: 0.78rem;
-      font-weight: 950;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
+    .brand-text {
+      line-height: 1.1;
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 0.96rem;
+      letter-spacing: 0.03em;
       white-space: nowrap;
-      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 230px;
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .nav-links {
       display: flex;
+      gap: 22px;
       align-items: center;
-      gap: clamp(18px, 2.5vw, 34px);
     }
 
-    .nav-links a {
-      position: relative;
-      color: var(--text);
-      font-size: 0.78rem;
-      font-weight: 900;
-      letter-spacing: 0.11em;
+    .nav-link {
+      font-size: 0.92rem;
+      color: #eef2f7;
       text-transform: uppercase;
-      transition: color 0.25s ease, transform 0.25s ease;
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: none !important;
+      letter-spacing: 0.08em;
+      position: relative;
+      font-weight: 700;
     }
 
-    .nav-links a::after {
+    .nav-link::after {
       content: "";
       position: absolute;
       left: 0;
-      bottom: -9px;
+      bottom: -6px;
       width: 100%;
       height: 2px;
       transform: scaleX(0);
-      transform-origin: left;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-origin: right;
+      transition: transform 0.35s ease;
+      background: linear-gradient(90deg, var(--gold), var(--red));
     }
 
-    .nav-links a:hover {
-      color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .nav-links a:hover::after {
+    .nav-link:hover::after {
       transform: scaleX(1);
+      transform-origin: left;
     }
 
-    .menu-toggle {
-      position: relative;
+    .menu-btn {
+      width: 45px;
+      height: 45px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 12px;
       display: none;
-      width: 46px;
-      height: 46px;
-      cursor: pointer;
-      color: var(--text);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      z-index: 2203;
-    }
-
-    .menu-toggle span {
-      position: absolute;
-      left: 11px;
-      width: 22px;
-      height: 2px;
-      background: currentColor;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-
-    .menu-toggle span:nth-child(1) { top: 15px; }
-    .menu-toggle span:nth-child(2) { top: 22px; }
-    .menu-toggle span:nth-child(3) { top: 29px; }
-    .menu-toggle.active span:nth-child(1) { top: 22px; transform: rotate(45deg); }
-    .menu-toggle.active span:nth-child(2) { opacity: 0; }
-    .menu-toggle.active span:nth-child(3) { top: 22px; transform: rotate(-45deg); }
-
-    .section {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(88px, 10vw, 148px) 0;
-      background: var(--bg);
-    }
-
-    .menu-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      pointer-events: none;
-      background: rgba(10, 10, 10, 0.22);
-      opacity: 0;
-      backdrop-filter: blur(5px);
-    }
-
-    .section.alt {
-      background: linear-gradient(180deg, var(--card), rgba(0, 194, 255, 0.08));
-    }
-
-    .section.blue-wash {
-      background: linear-gradient(135deg, var(--card), rgba(0, 194, 255, 0.14), var(--bg));
-      background-size: 180% 180%;
-    }
-
-    .shape {
-      position: absolute;
-      z-index: 0;
-      width: clamp(180px, 25vw, 360px);
-      height: clamp(180px, 25vw, 360px);
-      border-radius: 999px;
-      pointer-events: none;
-      background: radial-gradient(circle, rgba(0, 194, 255, 0.22), rgba(30, 144, 255, 0.08) 45%, rgba(255, 255, 255, 0) 70%);
-      filter: blur(14px);
-      opacity: 0.75;
-    }
-
-    .shape.one {
-      top: 8%;
-      right: -120px;
-    }
-
-    .shape.two {
-      left: -140px;
-      bottom: 8%;
-      width: clamp(220px, 30vw, 440px);
-      height: clamp(220px, 30vw, 440px);
-      opacity: 0.55;
-    }
-
-    .section-head {
-      max-width: 820px;
-      margin-bottom: 34px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
       align-items: center;
-      gap: 10px;
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 950;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.06);
+      cursor: pointer;
     }
 
-    .eyebrow::before {
-      content: "";
-      width: 34px;
+    .menu-btn span,
+    .menu-btn span::before,
+    .menu-btn span::after {
+      display: block;
+      width: 18px;
       height: 2px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      background: #fff;
+      position: relative;
+      transition: 0.25s ease;
     }
 
-    h1,
-    h2,
-    h3 {
-      font-family: "Anton", "Inter", sans-serif;
-      font-weight: 400;
-      letter-spacing: 0;
+    .menu-btn span::before,
+    .menu-btn span::after {
+      content: "";
+      position: absolute;
+      left: 0;
+    }
+
+    .menu-btn span::before {
+      top: -6px;
+    }
+
+    .menu-btn span::after {
+      top: 6px;
+    }
+
+    .mobile-panel {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: min(88vw, 360px);
+      height: 100dvh;
+      background: linear-gradient(180deg, rgba(7, 7, 8, 0.96), rgba(19, 19, 22, 0.98));
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 910;
+      transition: right 0.42s cubic-bezier(0.19, 1, 0.22, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 92px 26px 28px;
+      gap: 18px;
+    }
+
+    .mobile-panel.open {
+      right: 0;
+    }
+
+    .mobile-link {
+      font-size: 1.03rem;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--text);
+      padding: 13px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: #ecf0f4;
     }
 
-    h1 {
-      max-width: 770px;
-      font-size: clamp(3.5rem, 8.8vw, 7.4rem);
-      line-height: 0.92;
-      color: var(--text);
-    }
-
-    h2 {
-      margin-top: 14px;
-      font-size: clamp(2.8rem, 6.6vw, 5.6rem);
-      line-height: 0.98;
-    }
-
-    h3 {
-      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
-      line-height: 1;
-    }
-
-    p {
-      color: var(--muted);
-      line-height: 1.72;
-    }
-
-    .lead {
-      max-width: 660px;
-      margin-top: 18px;
-      font-size: clamp(1rem, 1.8vw, 1.16rem);
-      font-weight: 600;
-    }
-
-    .btn-row {
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      position: relative;
       display: flex;
       align-items: center;
+      padding-top: calc(var(--nav-h) + 12px);
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(120deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.45) 55%, rgba(0, 0, 0, 0.7)),
+        url("images/gym4.jpg");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.04);
+      will-change: transform;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 65%, #09090b 100%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: min(1160px, 92vw);
+      margin-inline: auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      border: 1px solid rgba(245, 185, 66, 0.35);
+      background: rgba(10, 10, 10, 0.4);
+      color: #fbe1ad;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-kicker {
+      color: #f4dfb1;
+      letter-spacing: 0.18em;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 12vw, 8rem);
+      line-height: 0.87;
+      text-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      max-width: 980px;
+    }
+
+    .hero h1 span {
+      display: block;
+    }
+
+    .hero p {
+      width: min(680px, 96%);
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      color: #d4dae4;
+    }
+
+    .hero-trust {
+      color: var(--trust);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .micro-trust {
+      color: #d9e2ec;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-cta {
+      display: flex;
       flex-wrap: wrap;
       gap: 14px;
     }
 
     .btn {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 54px;
-      padding: 0 26px;
-      overflow: hidden;
+      border: none;
       cursor: pointer;
-      border: 1px solid transparent;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: var(--card);
-      font-size: 0.8rem;
-      font-weight: 950;
-      letter-spacing: 0.1em;
+      padding: 14px 26px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      box-shadow: 0 14px 34px rgba(30, 144, 255, 0.20);
-      transition: transform 0.28s ease, box-shadow 0.28s ease, color 0.28s ease;
+      font-size: 0.82rem;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
     }
 
-    .btn svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-      flex: 0 0 auto;
+    .btn-primary {
+      background: linear-gradient(90deg, var(--gold), #ffcf6e);
+      color: #111;
+      box-shadow: 0 12px 34px rgba(245, 185, 66, 0.3);
     }
 
-    .btn:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 22px 50px rgba(30, 144, 255, 0.34);
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(245, 185, 66, 0.44);
     }
 
-    .btn:active {
-      transform: translateY(0) scale(0.98);
+    .cta-pulse {
+      animation: ctaPulse 1.7s ease-in-out infinite;
     }
 
-    .card:active,
-    .facility:active,
-    .gallery-item:active,
-    .people-card:active,
-    .join-card:active,
-    .review:active,
-    .timing-card:active,
-    .contact-item:active,
-    .faq-item:active {
-      transform: scale(0.985);
+    @keyframes ctaPulse {
+      0%,
+      100% {
+        box-shadow: 0 12px 34px rgba(245, 185, 66, 0.3);
+      }
+      50% {
+        box-shadow: 0 20px 42px rgba(255, 59, 59, 0.35);
+      }
     }
 
-    .btn.secondary {
-      background: var(--card);
-      color: var(--text);
-      border-color: var(--line);
-      box-shadow: var(--shadow-soft);
+    .magnetic {
+      will-change: transform;
     }
 
-    .btn.whatsapp-cta {
-      background: var(--whatsapp);
-      color: var(--card);
-      box-shadow: 0 16px 36px rgba(37, 211, 102, 0.24);
-      animation: softCtaPulse 3.8s ease-in-out infinite;
+    /* Offer section */
+    .offer {
+      padding: 74px 0;
+      background: linear-gradient(180deg, #090a0b, #111215);
     }
 
-    .btn.whatsapp-cta:hover {
-      box-shadow: 0 22px 52px rgba(37, 211, 102, 0.34);
+    .inside-gym {
+      background: linear-gradient(180deg, #111014, #0d0d0f);
     }
 
-    .btn.big {
-      min-height: 64px;
-      padding-inline: 34px;
-      font-size: 0.88rem;
-    }
-
-    @keyframes softCtaPulse {
-      0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 16px 36px rgba(37, 211, 102, 0.20); }
-      50% { transform: translateY(-1px) scale(1.015); box-shadow: 0 20px 46px rgba(37, 211, 102, 0.30); }
-    }
-
-    .cta-note {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 750;
-    }
-
-    .reply-note {
-      margin-top: 10px;
-      color: var(--accent);
-      font-size: 0.9rem;
-      font-weight: 900;
-    }
-
-    .btn.secondary:hover {
-      color: var(--accent);
-      box-shadow: 0 16px 36px rgba(10, 10, 10, 0.10);
-    }
-
-    .icon {
-      width: 42px;
-      height: 42px;
+    .inside-grid {
       display: grid;
-      place-items: center;
-      color: var(--accent);
-      border-radius: 14px;
-      background: rgba(30, 144, 255, 0.10);
-    }
-
-    .icon svg {
-      width: 22px;
-      height: 22px;
-      fill: currentColor;
-    }
-
-    .hero {
-      min-height: 100vh;
-      padding: 0;
-      display: grid;
-      background:
-        linear-gradient(180deg, var(--card), var(--bg));
-      transition: background 0.4s ease;
-    }
-
-    .hero-grid {
-      width: 100%;
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-      align-items: stretch;
-    }
-
-    .hero-copy {
-      position: relative;
-      z-index: 4;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 124px max(24px, calc((100vw - 1180px) / 2)) 76px;
-      transform-origin: left center;
-    }
-
-    .hero-mark {
-      width: 88px;
-      margin-bottom: clamp(26px, 5vw, 54px);
-      filter: drop-shadow(0 12px 24px rgba(10, 10, 10, 0.12));
-    }
-
-    .hero-copy .lead {
-      margin-bottom: 30px;
-    }
-
-    .trust-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 18px;
       margin-top: 24px;
     }
 
-    .trust-pill {
-      display: inline-flex;
+    .inside-card {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
       align-items: center;
-      gap: 8px;
-      min-height: 40px;
-      padding: 0 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.76);
-      color: var(--text);
-      box-shadow: var(--shadow-soft);
-      font-size: 0.82rem;
-      font-weight: 900;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(4px);
     }
 
-    .urgency-bar {
+    .inside-card:nth-child(even) {
+      grid-template-columns: 0.95fr 1.05fr;
+    }
+
+    .inside-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 18px;
+      transform: scale(1.02);
+      will-change: transform, opacity;
+    }
+
+    .inside-copy {
+      padding: 6px 6px 6px 10px;
+    }
+
+    .inside-copy h3 {
+      font-family: "Manrope", sans-serif;
+      font-size: 1.28rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .inside-copy p {
+      max-width: 34ch;
+    }
+
+    .offer-card {
+      border-radius: 24px;
+      border: 1px solid rgba(245, 185, 66, 0.28);
+      background: linear-gradient(145deg, rgba(245, 185, 66, 0.12), rgba(255, 59, 59, 0.1), rgba(255, 255, 255, 0.04));
+      padding: clamp(24px, 3vw, 36px);
+      display: grid;
+      gap: 14px;
+      box-shadow: var(--shadow);
       position: relative;
-      z-index: 5;
-      padding: 16px 20px;
-      text-align: center;
-      color: var(--text);
-      background: rgba(0, 194, 255, 0.14);
-      border-top: 1px solid rgba(30, 144, 255, 0.16);
-      border-bottom: 1px solid rgba(30, 144, 255, 0.16);
-      font-weight: 900;
+      overflow: hidden;
     }
 
-    .hero-story {
+    .offer-card::after {
+      content: "";
       position: absolute;
-      left: max(24px, calc((100vw - 1180px) / 2));
-      bottom: clamp(28px, 5vw, 70px);
-      max-width: 540px;
-      color: var(--text);
-      font-family: "Anton", "Inter", sans-serif;
-      font-size: clamp(2rem, 4.4vw, 4.8rem);
-      line-height: 0.98;
-      text-transform: uppercase;
-      opacity: 0;
-      transform: translateY(24px) scale(0.96);
+      width: 240px;
+      height: 240px;
+      top: -80px;
+      right: -70px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.22), transparent 62%);
       pointer-events: none;
     }
 
-    .highlight {
-      color: var(--accent);
+    .offer-highlight {
+      display: inline-flex;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 8px 14px;
+      border: 1px solid rgba(103, 216, 151, 0.55);
+      color: #d6ffe8;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(103, 216, 151, 0.12);
     }
 
-    .hero-media {
+    /* Problem solution section */
+    .problem-solution {
+      background: linear-gradient(180deg, #111215, #0e0f12);
+    }
+
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .ps-card {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 24px;
+      backdrop-filter: blur(6px);
+      transition: transform 0.25s ease;
+    }
+
+    .ps-card h3 {
+      font-family: "Manrope", sans-serif;
+      font-size: 1.26rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .ps-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .ps-list li {
+      font-size: 1rem;
+      color: #d8dde6;
+      padding-left: 20px;
       position: relative;
-      min-height: 100vh;
-      overflow: hidden;
-      background: var(--card);
-      border-bottom-left-radius: 44px;
-      box-shadow: var(--shadow);
     }
 
-    .hero-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(1.05);
-      filter: brightness(1.08) contrast(1.02) saturate(1.02);
-    }
-
-    .hero-media::before {
+    .ps-list li::before {
       content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      position: absolute;
+      left: 0;
+      top: 9px;
+      background: linear-gradient(90deg, var(--gold), var(--red));
+    }
+
+    .ps-solution {
+      border-color: rgba(103, 216, 151, 0.55);
+      background: linear-gradient(165deg, rgba(103, 216, 151, 0.14), rgba(255, 255, 255, 0.06));
+    }
+
+    .btn-secondary {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 0 0 rgba(255, 59, 59, 0);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 26px rgba(255, 59, 59, 0.5);
+      border-color: rgba(255, 59, 59, 0.45);
+    }
+
+    /* Story section 1 */
+    .story-transform {
+      background: linear-gradient(180deg, #09090b, #111014 62%, #11130f);
+    }
+
+    .transform-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.08fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .transform-image-wrap {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transform-style: preserve-3d;
+    }
+
+    .transform-layer {
       position: absolute;
       inset: 0;
-      z-index: 2;
+      background-image: url("images/squatsgirl.jpg");
+      background-size: cover;
+      background-position: center;
+      mix-blend-mode: screen;
+      opacity: 0.18;
+      transform: translateZ(22px) scale(1.05);
       pointer-events: none;
-      background: linear-gradient(90deg, var(--card) 0%, rgba(255, 255, 255, 0.72) 24%, rgba(255, 255, 255, 0.12) 62%, rgba(255, 255, 255, 0) 100%);
-      background-size: 170% 170%;
-      animation: heroOverlayShift 9s ease-in-out infinite alternate;
     }
 
-    @keyframes heroOverlayShift {
-      from { background-position: 0% 50%; }
-      to { background-position: 100% 50%; }
-    }
-
-    .power-moment {
-      min-height: 68vh;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      background: linear-gradient(135deg, var(--card), rgba(0, 194, 255, 0.18), var(--bg));
-      background-size: 180% 180%;
-    }
-
-    .power-moment h2 {
-      max-width: 1000px;
-      margin-inline: auto;
-      font-size: clamp(3.4rem, 9vw, 8.4rem);
-    }
-
-    .power-moment p {
-      max-width: 640px;
-      margin: 20px auto 0;
-      font-size: clamp(1rem, 1.7vw, 1.18rem);
-      font-weight: 650;
-    }
-
-    .people-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr 0.9fr;
-      gap: 20px;
-      align-items: stretch;
-    }
-
-    .people-card {
-      min-height: 390px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      cursor: pointer;
-      transition: transform 0.34s ease, box-shadow 0.34s ease, border-color 0.34s ease;
-    }
-
-    .people-card:first-child {
-      min-height: 500px;
-    }
-
-    .people-card img {
+    .transform-image {
       width: 100%;
-      height: 100%;
+      aspect-ratio: 16 / 10;
       object-fit: cover;
-      transition: transform 0.7s ease, filter 0.7s ease;
+      transform-origin: center;
+      will-change: transform;
+      transition: transform 0.55s ease;
     }
 
-    .people-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(30, 144, 255, 0.24);
-      box-shadow: var(--shadow);
+    .transform-image-wrap:hover .transform-image {
+      transform: scale(1.07);
     }
 
-    .people-card:hover img {
-      transform: scale(1.055);
-      filter: brightness(1.04);
-    }
-
-    .join-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .join-card {
-      display: grid;
-      gap: 16px;
-      padding: 22px;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-
-    .join-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(30, 144, 255, 0.24);
-      box-shadow: var(--shadow);
-    }
-
-    .join-card span {
-      font-size: 1.5rem;
-    }
-
-    .join-card strong {
-      color: var(--text);
-      font-size: 1rem;
-      font-weight: 950;
-    }
-    }
-
-    .info-strip {
+    .transform-overlay {
       position: absolute;
-      right: 24px;
-      bottom: 24px;
-      z-index: 4;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      width: min(560px, calc(100% - 48px));
-    }
-
-    .info-item {
-      min-height: 88px;
-      display: grid;
-      align-content: center;
-      gap: 8px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .info-item svg {
-      width: 20px;
-      height: 20px;
-      color: var(--accent);
-      fill: currentColor;
-    }
-
-    .info-item strong {
-      color: var(--text);
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.55);
       font-size: 0.95rem;
-      font-weight: 950;
-    }
-
-    .info-item span {
-      color: var(--muted);
-      font-size: 0.76rem;
-      font-weight: 850;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
+      color: #fff2cf;
+      font-weight: 700;
+      backdrop-filter: blur(4px);
     }
 
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
+    /* Story section 2 horizontal */
+    .gym-experience {
+      padding-top: 0;
+      padding-bottom: 0;
+      background: linear-gradient(180deg, #11130f, #0d0d0f);
     }
 
-    .card {
-      min-height: 230px;
+    .h-scroll {
+      height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 24px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.34s ease, border-color 0.34s ease, box-shadow 0.34s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-7px);
-      border-color: rgba(30, 144, 255, 0.28);
-      box-shadow: var(--shadow);
-    }
-
-    .card p {
-      margin-top: 12px;
-    }
-
-    .media-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .facility {
-      position: relative;
-      min-height: 390px;
+      align-items: center;
       overflow: hidden;
-      cursor: pointer;
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
     }
 
-    .facility img,
-    .gallery-item img {
+    .h-track {
+      display: flex;
+      gap: 24px;
+      width: 300vw;
+      padding: 0 4vw;
+    }
+
+    .exp-card {
+      width: 92vw;
+      max-width: 980px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      background: #131316;
+      box-shadow: var(--shadow);
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .exp-card img {
       width: 100%;
-      height: 100%;
+      height: clamp(340px, 64vh, 620px);
       object-fit: cover;
-      transition: transform 0.6s ease, filter 0.6s ease;
+      filter: brightness(0.84);
+      transform: scale(1.03);
+      transition: transform 0.7s ease;
     }
 
-    .facility::after,
-    .gallery-item::after {
-      content: "";
+    .exp-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .exp-overlay {
       position: absolute;
       inset: auto 0 0;
-      height: 45%;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.92));
-      pointer-events: none;
-    }
-
-    .facility h3 {
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 18px;
-      z-index: 2;
-    }
-
-    .facility:hover,
-    .gallery-item:hover {
-      transform: translateY(-7px);
-      border-color: rgba(30, 144, 255, 0.32);
-      box-shadow: var(--shadow);
-    }
-
-    .facility:hover img,
-    .gallery-item:hover img {
-      transform: scale(1.07);
-      filter: brightness(1.04) contrast(1.02);
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .gallery-item {
-      position: relative;
-      height: 290px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
-    }
-
-    .gallery-item:nth-child(1),
-    .gallery-item:nth-child(6) {
-      grid-column: span 2;
-    }
-
-    .gallery-label {
-      position: absolute;
-      left: 16px;
-      bottom: 16px;
-      z-index: 2;
-      color: var(--text);
-      font-size: 0.76rem;
-      font-weight: 950;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.86);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .reviews-wrap {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 28px;
-      align-items: start;
-    }
-
-    .rating-panel {
-      position: sticky;
-      top: 100px;
       padding: 30px;
-      border: 1px solid rgba(30, 144, 255, 0.18);
-      border-radius: 28px;
-      background: linear-gradient(145deg, var(--card), rgba(0, 194, 255, 0.10));
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    }
+
+    .exp-overlay h3 {
+      font-size: clamp(1.8rem, 4.4vw, 3rem);
+    }
+
+    /* Story section 3 */
+    .equipment {
+      background: linear-gradient(180deg, #0d0d0f, #111013);
+    }
+
+    .equipment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .equip-art {
+      position: relative;
+      border-radius: 26px;
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(140deg, rgba(245, 185, 66, 0.09), rgba(255, 59, 59, 0.08), rgba(255, 255, 255, 0.04));
       box-shadow: var(--shadow);
     }
 
-    .review-kicker {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      margin-bottom: 14px;
-      padding: 8px 13px;
+    .equip-img {
+      border-radius: 18px;
+      width: 100%;
+      aspect-ratio: 1.15 / 1;
+      object-fit: cover;
+      will-change: transform;
+    }
+
+    .accent-line {
+      width: 86px;
+      height: 5px;
       border-radius: 999px;
-      background: rgba(0, 194, 255, 0.12);
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 950;
+      margin: 22px 0;
+      background: linear-gradient(90deg, var(--gold), var(--red));
     }
 
-    .score {
-      display: flex;
-      align-items: flex-end;
-      gap: 14px;
-      margin-top: 16px;
+    /* About */
+    .about {
+      background: linear-gradient(180deg, #111013, #0b0c0e);
     }
 
-    .score strong {
-      font-family: "Anton", sans-serif;
-      font-size: clamp(5rem, 11vw, 8rem);
-      font-weight: 400;
-      line-height: 0.82;
-    }
-
-    .stars {
-      color: var(--accent);
-      font-size: 1.2rem;
-      letter-spacing: 0.06em;
-    }
-
-    .review-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 0 0 18px;
-    }
-
-    .review-tags span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 34px;
-      padding: 0 13px;
-      border-radius: 999px;
-      color: var(--accent);
-      background: rgba(0, 194, 255, 0.12);
-      font-size: 0.78rem;
-      font-weight: 850;
-    }
-
-    .review-list {
+    .about-grid {
       display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .about-card {
+      border: 1px solid var(--stroke);
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+      backdrop-filter: blur(3px);
+      transform-style: preserve-3d;
+    }
+
+    .about-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(245, 185, 66, 0.5);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34);
+    }
+
+    .icon-badge {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      background: linear-gradient(140deg, rgba(245, 185, 66, 0.2), rgba(255, 59, 59, 0.24));
+      border: 1px solid rgba(245, 185, 66, 0.35);
+    }
+
+    .about-card h3 {
+      font-size: 1.28rem;
+      margin-bottom: 8px;
+      font-family: "Manrope", sans-serif;
+      font-weight: 700;
+    }
+
+    /* Timings */
+    .timings {
+      background: linear-gradient(180deg, #0b0c0e, #111114);
+    }
+
+    .timings-grid {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .time-card {
+      padding: 24px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: linear-gradient(150deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+      transition: transform 0.28s ease, border-color 0.28s ease;
+    }
+
+    .time-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(103, 216, 151, 0.62);
+    }
+
+    .time-label {
+      color: #f8dfb0;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      margin-bottom: 12px;
+    }
+
+    .time-value {
+      font-size: 1.38rem;
+      color: #fff;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    /* Reviews */
+    .reviews {
+      background: linear-gradient(180deg, #111114, #0b0b0d);
+    }
+
+    .reviews-grid {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
 
     .review {
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: linear-gradient(170deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
       padding: 24px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
-    }
-
-    .review:hover {
-      transform: translateY(-6px);
-      border-color: rgba(30, 144, 255, 0.38);
-      box-shadow: 0 18px 50px rgba(30, 144, 255, 0.14), var(--shadow-soft);
-    }
-
-    .review-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 12px;
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+      will-change: transform;
     }
 
     .review strong {
-      display: block;
-      color: var(--text);
-      font-size: 0.98rem;
-      font-weight: 950;
+      color: #fff2cf;
+      font-weight: 800;
     }
 
-    .review .stars {
-      font-size: 0.95rem;
-      white-space: nowrap;
+    .reviews-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      margin-bottom: 6px;
     }
 
-    .verified {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      width: fit-content;
-      margin-top: 16px;
-      padding: 7px 11px;
+    .trust-badge {
+      border: 1px solid rgba(103, 216, 151, 0.55);
+      color: #dbffe9;
+      background: rgba(103, 216, 151, 0.14);
+      padding: 8px 12px;
       border-radius: 999px;
-      color: var(--accent);
-      background: rgba(0, 194, 255, 0.12);
-      font-size: 0.76rem;
-      font-weight: 900;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
     }
 
-    .verified svg {
-      width: 14px;
-      height: 14px;
-      fill: currentColor;
+    /* Urgency section */
+    .urgency {
+      background: linear-gradient(180deg, #0d0d0f, #141012);
     }
 
-    .timings-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .timing-card {
-      min-height: 240px;
-      padding: 24px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
-    }
-
-    .timing-card:hover {
-      transform: translateY(-7px);
-      border-color: rgba(30, 144, 255, 0.26);
+    .urgency-wrap {
+      border: 1px solid rgba(255, 59, 59, 0.35);
+      border-radius: 22px;
+      padding: clamp(20px, 3vw, 34px);
+      background: linear-gradient(150deg, rgba(255, 59, 59, 0.16), rgba(255, 255, 255, 0.05));
       box-shadow: var(--shadow);
     }
 
-    .timing-card h3 {
-      margin: 22px 0 12px;
+    .urgency-note {
+      color: #ffb3b3;
+      font-weight: 700;
+      margin-bottom: 18px;
+      letter-spacing: 0.04em;
     }
 
-    .time {
-      color: var(--text);
-      font-size: clamp(1.1rem, 2vw, 1.35rem);
-      font-weight: 950;
-      line-height: 1.45;
-    }
-
-    .contact-grid {
+    .progress-group {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-      gap: 22px;
-      align-items: stretch;
+      gap: 14px;
     }
 
-    .conversion-cta {
-      text-align: center;
-      background: var(--text);
-      color: var(--card);
-      padding-block: clamp(106px, 12vw, 174px);
+    .progress-line {
+      display: grid;
+      gap: 8px;
     }
 
-    .conversion-cta h2,
-    .conversion-cta p {
-      color: var(--card);
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: #ecf0f6;
     }
 
-    .conversion-cta p {
-      max-width: 620px;
-      margin: 18px auto 30px;
-      opacity: 0.82;
+    .meter {
+      width: 100%;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.13);
+      overflow: hidden;
     }
 
-    .conversion-cta .btn {
-      background: var(--whatsapp);
-      color: var(--card);
-      box-shadow: 0 18px 44px rgba(37, 211, 102, 0.28);
+    .meter span {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #ff6b6b, var(--red));
+      box-shadow: 0 0 16px rgba(255, 59, 59, 0.4);
+      will-change: width;
+    }
+
+    .review:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.3);
+    }
+
+    .stars {
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      font-size: 0.96rem;
+    }
+
+    .review h3 {
+      font-family: "Manrope", sans-serif;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .reviews-cta {
+      margin-top: 24px;
+    }
+
+    .reviews-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #111;
+      background: var(--gold);
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .reviews-cta a:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(245, 185, 66, 0.35);
+    }
+
+    /* Location and contact */
+    .location {
+      background: linear-gradient(180deg, #0b0b0d, #060607);
+      padding-bottom: 130px;
+    }
+
+    .loc-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+      margin-top: 22px;
+    }
+
+    .map-box,
+    .contact-box {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: var(--shadow);
+    }
+
+    .map-box iframe {
+      width: 100%;
+      min-height: 420px;
+      border: 0;
+      filter: grayscale(0.18) contrast(1.08);
+    }
+
+    .contact-box {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+      padding-bottom: 14px;
+    }
+
+    .contact-item:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .contact-label {
+      color: #f2d9a9;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.76rem;
+      margin-bottom: 6px;
+    }
+
+    .contact-value {
+      color: #f4f7fa;
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+
+    .contact-hotline {
+      color: #ffe3a6;
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .contact-push {
+      border: 1px solid rgba(245, 185, 66, 0.35);
+      background: rgba(245, 185, 66, 0.12);
+      border-radius: 14px;
+      padding: 14px;
+      color: #ffefcb;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .contact-cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .social-head {
+      display: grid;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .social-title {
+      color: #fff3d0;
+      font-weight: 800;
+      font-size: 0.98rem;
+    }
+
+    .social-subtext {
+      color: #aeb6c1;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .social-proof {
+      color: #67d897;
+      font-weight: 700;
+    }
+
+    .social-set {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 2px;
+    }
+
+    .social-item {
+      display: grid;
+      justify-items: center;
+      gap: 8px;
+      padding: 10px 8px 6px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .social-item:hover {
+      transform: translateY(-3px);
+      border-color: rgba(245, 185, 66, 0.6);
+    }
+
+    .social-item .social {
+      width: 48px;
+      height: 48px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .social-item.facebook .social {
+      background: #1877f2;
+    }
+
+    .social-item.instagram .social {
+      background: radial-gradient(circle at 30% 30%, #fdf497, #fd5949, #d6249f, #285aeb);
+    }
+
+    .social-item.instagram .social svg {
+      width: 21px;
+      height: 21px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .social-item.facebook:hover {
+      border-color: rgba(24, 119, 242, 0.9);
+      box-shadow: 0 12px 24px rgba(24, 119, 242, 0.22), 0 0 18px rgba(24, 119, 242, 0.38);
+    }
+
+    .social-item.instagram:hover {
+      border-color: rgba(214, 36, 159, 0.9);
+      box-shadow: 0 12px 24px rgba(214, 36, 159, 0.22), 0 0 18px rgba(214, 36, 159, 0.38);
+    }
+
+    .social-item .social svg {
+      fill: #fff;
+      color: #fff;
+    }
+
+    .social-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #d8dee7;
+    }
+
+    /* FAQ */
+    .faq {
+      background: linear-gradient(180deg, #111114, #0c0c0f);
     }
 
     .faq-list {
       display: grid;
-      gap: 14px;
-      max-width: 900px;
+      gap: 12px;
+      margin-top: 24px;
     }
 
     .faq-item {
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
       overflow: hidden;
-      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
     }
 
-    .faq-item:hover {
-      transform: translateY(-3px);
-      border-color: rgba(30, 144, 255, 0.24);
-      box-shadow: var(--shadow);
-    }
-
-    .faq-question {
+    .faq-q {
       width: 100%;
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 0 22px;
-      cursor: pointer;
-      color: var(--text);
-      background: transparent;
-      text-align: left;
-      font-weight: 900;
-      font-size: clamp(0.98rem, 1.7vw, 1.1rem);
-    }
-
-    .faq-arrow {
-      width: 36px;
-      height: 36px;
-      display: grid;
-      place-items: center;
-      flex: 0 0 auto;
-      border-radius: 50%;
-      background: rgba(0, 194, 255, 0.12);
-      color: var(--accent);
-      transition: transform 0.3s ease;
-    }
-
-    .faq-arrow svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-    }
-
-    .faq-item.active .faq-arrow {
-      transform: rotate(180deg);
-    }
-
-    .faq-answer {
-      height: 0;
-      overflow: hidden;
-    }
-
-    .faq-answer p {
-      padding: 0 22px 22px;
-    }
-
-    .map {
-      min-height: 520px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .map iframe {
-      width: 100%;
-      height: 100%;
-      min-height: 520px;
+      appearance: none;
       border: 0;
+      background: transparent;
+      color: #f4f7fa;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 800;
     }
 
-    .contact-panel {
-      display: grid;
-      gap: 12px;
+    .faq-q span:last-child {
+      color: var(--gold);
+      transition: transform 0.25s ease;
     }
 
-    .contact-item {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 14px;
-      align-items: start;
-      padding: 20px;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+    .faq-item.open .faq-q span:last-child {
+      transform: rotate(45deg);
     }
 
-    .contact-item:hover {
-      transform: translateY(-4px);
-      border-color: rgba(30, 144, 255, 0.26);
+    .faq-a {
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding: 0 20px;
+      color: #cfd6e0;
+    }
+
+    .faq-a-inner {
+      padding: 0 0 18px;
+    }
+
+    /* Final CTA */
+    .final-cta {
+      padding: 72px 0 66px;
+      background: linear-gradient(180deg, #0c0c0f, #050505);
+    }
+
+    .final-cta-card {
+      border-radius: 24px;
+      border: 1px solid rgba(245, 185, 66, 0.25);
+      background: linear-gradient(140deg, rgba(245, 185, 66, 0.12), rgba(255, 59, 59, 0.08), rgba(255, 255, 255, 0.04));
+      padding: clamp(24px, 4vw, 38px);
       box-shadow: var(--shadow);
     }
 
-    .contact-item strong {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--text);
-      font-weight: 950;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 0.8rem;
+    .final-cta-card p {
+      margin-bottom: 18px;
     }
 
-    .contact-item a,
-    .contact-item p {
-      color: var(--muted);
-      overflow-wrap: anywhere;
-      transition: color 0.22s ease;
+    .final-reassurance {
+      display: inline-block;
+      margin: 2px 0 14px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(245, 185, 66, 0.12);
+      border: 1px solid rgba(245, 185, 66, 0.22);
+      color: #fff0cb;
+      font-weight: 700;
+      line-height: 1.55;
     }
 
-    .contact-item a:hover {
-      color: var(--accent);
+    .final-note {
+      margin-top: 10px;
+      color: var(--trust);
+      font-weight: 700;
     }
 
-    .footer {
-      position: relative;
-      z-index: 2;
-      padding: 48px 0 26px;
-      border-top: 1px solid var(--line);
-      background: var(--card);
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: #050505;
+      color: #d0d5dd;
+      padding: 26px 0 28px;
     }
 
     .footer-grid {
-      width: var(--max);
-      margin-inline: auto;
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr 1fr 0.8fr;
-      gap: 28px;
+      grid-template-columns: 1.25fr 0.7fr 0.9fr 0.95fr;
+      gap: 24px;
+      align-items: start;
     }
 
-    .footer-logo {
-      width: 58px;
-      margin-bottom: 14px;
-      filter: drop-shadow(0 10px 18px rgba(10, 10, 10, 0.10));
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
     }
 
-    .footer h3 {
-      margin-bottom: 12px;
-      font-size: 1.45rem;
+    .footer-social-label {
+      margin-top: 10px;
+      color: #adb5c0;
+      font-size: 0.92rem;
+      line-height: 1.6;
     }
 
-    .footer p,
-    .footer a {
-      color: var(--muted);
-      line-height: 1.8;
+    .footer-socials .social.facebook {
+      background: #1877f2;
     }
 
-    .footer a {
-      display: block;
-      transition: color 0.2s ease, transform 0.2s ease;
+    .footer-socials .social.instagram {
+      background: radial-gradient(circle at 30% 30%, #fdf497, #fd5949, #d6249f, #285aeb);
     }
 
-    .footer a:hover {
-      color: var(--accent);
-      transform: translateX(3px);
+    .footer-socials .social.facebook:hover {
+      box-shadow: 0 12px 24px rgba(24, 119, 242, 0.22), 0 0 18px rgba(24, 119, 242, 0.38);
+    }
+
+    .footer-socials .social.instagram:hover {
+      box-shadow: 0 12px 24px rgba(214, 36, 159, 0.22), 0 0 18px rgba(214, 36, 159, 0.38);
+    }
+
+    .footer-title {
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .footer-links a {
+      color: #dbe1ea;
+      font-size: 0.95rem;
+    }
+
+    .footer-muted {
+      color: #9fa7b4;
+      line-height: 1.65;
+      margin-top: 10px;
     }
 
     .socials {
       display: flex;
       gap: 10px;
+      margin-top: 2px;
     }
 
-    .socials a {
+    .social {
       width: 42px;
       height: 42px;
       display: grid;
       place-items: center;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--bg);
-      color: var(--text);
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.24s ease, color 0.24s ease, box-shadow 0.24s ease;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.08);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .socials a:hover {
-      color: var(--accent);
-      transform: translateY(-3px) scale(1.04);
-      box-shadow: var(--shadow);
+    .social:hover {
+      transform: translateY(-4px);
+      border-color: rgba(245, 185, 66, 0.58);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
     }
 
-    .socials svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-    }
-
-    .copyright {
-      width: var(--max);
-      margin: 34px auto 0;
-      padding-top: 20px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.86rem;
-    }
-
-    .whatsapp-float {
+    /* Floating WhatsApp */
+    .wa-float {
       position: fixed;
-      right: 22px;
-      bottom: 22px;
-      z-index: 1400;
+      right: 18px;
+      bottom: 18px;
       width: 62px;
       height: 62px;
+      border-radius: 50%;
+      z-index: 940;
       display: grid;
       place-items: center;
-      border-radius: 50%;
-      background: var(--whatsapp);
-      color: var(--card);
-      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.26);
-      animation: whatsappPulse 2.2s ease-in-out infinite;
-      transition: transform 0.24s ease, box-shadow 0.24s ease;
+      background: linear-gradient(145deg, #1fc35f, #1aa94f);
+      box-shadow: 0 16px 32px rgba(31, 195, 95, 0.35);
+      animation: waPulse 1.9s infinite, waShake 4.2s infinite;
+      border: 2px solid rgba(255, 255, 255, 0.32);
     }
 
-    .whatsapp-float:hover {
-      transform: translateY(-4px) scale(1.04);
-      box-shadow: 0 16px 38px rgba(37, 211, 102, 0.34);
+    .wa-float svg {
+      width: 30px;
+      height: 30px;
+      fill: #fff;
     }
 
-    .whatsapp-float svg {
-      width: 32px;
-      height: 32px;
+    .wa-tooltip {
+      position: absolute;
+      right: 72px;
+      white-space: nowrap;
+      background: rgba(0, 0, 0, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #f7fbff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.76rem;
+      letter-spacing: 0.03em;
+      opacity: 0;
+      transform: translateX(8px);
+      transition: opacity 0.24s ease, transform 0.24s ease;
+      pointer-events: none;
+    }
+
+    .wa-float:hover .wa-tooltip {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .wa-float.pulse-boost {
+      animation-duration: 1.2s, 3s;
+    }
+
+    .mobile-sticky-cta {
+      position: fixed;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      z-index: 935;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      background: linear-gradient(100deg, rgba(31, 195, 95, 0.94), rgba(20, 160, 76, 0.96));
+      color: #fff;
+      padding: 12px 14px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+    }
+
+    .mobile-sticky-cta svg {
+      width: 18px;
+      height: 18px;
       fill: currentColor;
     }
 
-    @keyframes whatsappPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.24), 0 12px 30px rgba(37, 211, 102, 0.26); }
-      50% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0), 0 12px 30px rgba(37, 211, 102, 0.26); }
+    @keyframes waPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(31, 195, 95, 0.55), 0 16px 32px rgba(31, 195, 95, 0.35);
+      }
+      70% {
+        box-shadow: 0 0 0 16px rgba(31, 195, 95, 0), 0 16px 32px rgba(31, 195, 95, 0.32);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(31, 195, 95, 0), 0 16px 32px rgba(31, 195, 95, 0.35);
+      }
     }
 
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 2200;
-      display: none;
-      place-items: center;
-      padding: 22px;
-      background: rgba(248, 250, 252, 0.88);
-      backdrop-filter: blur(14px);
+    @keyframes waShake {
+      0%,
+      90%,
+      100% {
+        transform: rotate(0deg);
+      }
+      92% {
+        transform: rotate(-10deg);
+      }
+      94% {
+        transform: rotate(8deg);
+      }
+      96% {
+        transform: rotate(-6deg);
+      }
+      98% {
+        transform: rotate(4deg);
+      }
     }
 
-    .lightbox.open {
-      display: grid;
-    }
-
-    .lightbox-inner {
-      position: relative;
-      width: min(1060px, 94vw);
-      max-height: 88vh;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      background: var(--card);
-      box-shadow: var(--shadow);
-    }
-
-    .lightbox img {
-      width: 100%;
-      max-height: 88vh;
-      object-fit: contain;
-      background: var(--card);
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      z-index: 2;
-      width: 44px;
-      height: 44px;
-      cursor: pointer;
-      color: var(--text);
-      border: 1px solid var(--line);
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.88);
-      font-size: 1.8rem;
-      line-height: 1;
-      transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
-    }
-
-    .lightbox-close:hover {
-      transform: scale(1.05);
-      color: var(--accent);
-      background: var(--card);
-    }
-
+    /* Responsive */
     @media (max-width: 1040px) {
-      .card-grid,
-      .media-grid,
-      .join-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .people-grid {
+      .transform-grid,
+      .loc-grid {
         grid-template-columns: 1fr;
-      }
-
-      .people-card,
-      .people-card:first-child {
-        min-height: 360px;
-      }
-
-      .reviews-wrap,
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .rating-panel {
-        position: relative;
-        top: auto;
       }
 
       .footer-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .reviews-grid,
+      .timings-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    @media (max-width: 880px) {
-      html,
-      body {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-      }
-
-      body {
-        font-size: 15px;
-      }
-
-      .brand span {
+    @media (max-width: 820px) {
+      .nav-links {
         display: none;
       }
 
-      .menu-toggle {
-        display: block;
+      .menu-btn {
+        display: inline-flex;
       }
 
-      .nav-links {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: min(360px, 86vw);
-        height: 100vh;
-        height: 100dvh;
-        z-index: 2500;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 24px;
-        padding: 94px 34px max(42px, env(safe-area-inset-bottom));
-        background: var(--card);
-        border-left: 1px solid var(--line);
-        box-shadow: var(--shadow);
-        transform: translateX(100%);
-        will-change: transform;
+      .hero h1 {
+        font-size: clamp(2.5rem, 17vw, 5rem);
       }
 
-      .nav-links a {
+      .hero p {
         width: 100%;
-        padding: 12px 0;
-        font-size: 1.08rem;
-        letter-spacing: 0.08em;
-        opacity: 1;
-        visibility: visible;
       }
 
-      .nav-links a:active {
-        color: var(--accent);
-        transform: translateX(4px) scale(0.98);
-      }
-
-      .hero-grid {
+      .inside-card,
+      .inside-card:nth-child(even) {
         grid-template-columns: 1fr;
       }
 
-      .hero-copy {
-        min-height: auto;
-        padding: 106px 20px 42px;
+      .footer-grid {
+        grid-template-columns: 1fr;
       }
 
-      .hero-media {
-        min-height: 52vh;
-        border-bottom-left-radius: 0;
+      .social-set {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .section {
+        padding: 82px 0;
       }
 
-      .hero-story {
-        position: relative;
-        left: auto;
-        bottom: auto;
-        margin-top: 34px;
-      }
-
-      .hero-media::before {
-        background: linear-gradient(180deg, var(--card) 0%, rgba(255, 255, 255, 0.5) 22%, rgba(255, 255, 255, 0) 64%);
-      }
-
-      .info-strip {
-        right: 16px;
-        bottom: 16px;
-        width: calc(100% - 32px);
-      }
-
-      .gallery-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .gallery-item:nth-child(1),
-      .gallery-item:nth-child(6) {
-        grid-column: span 2;
-      }
-
+      .reviews-grid,
       .timings-grid {
         grid-template-columns: 1fr;
       }
 
-      .section {
-        padding-block: 82px;
+      .time-value {
+        font-size: 1.2rem;
       }
 
-      .power-moment {
-        min-height: 56vh;
+      .brand-title {
+        max-width: 170px;
       }
 
-      .reviews-wrap {
-        gap: 20px;
-      }
-    }
-
-    @media (max-width: 620px) {
-      :root {
-        --max: calc(100vw - 32px);
-      }
-
-      .nav {
-        height: 72px;
-      }
-
-      .brand img {
-        width: 44px;
-        height: 44px;
-      }
-
-      .hero-mark {
-        width: 62px;
-        margin-bottom: 20px;
-      }
-
-      h1 {
-        font-size: clamp(2.9rem, 14.5vw, 4.55rem);
-        line-height: 0.95;
-      }
-
-      h2 {
-        font-size: clamp(2.35rem, 12vw, 4rem);
-      }
-
-      h3 {
-        font-size: clamp(1.45rem, 8vw, 2rem);
-      }
-
-      .lead {
-        margin-top: 14px;
-        font-size: 1rem;
-      }
-
-      .section {
-        padding-block: 78px;
-      }
-
-      .btn,
-      .btn-row {
-        width: 100%;
-      }
-
-      .btn-row .btn {
-        flex: 1 1 100%;
+      .map-box iframe {
+        min-height: 330px;
       }
 
       .btn {
-        min-height: 58px;
-        padding-inline: 20px;
-        box-shadow: 0 12px 28px rgba(30, 144, 255, 0.18);
-      }
-
-      .btn.big {
-        min-height: 62px;
-      }
-
-      .hero-copy {
-        padding: 96px 16px 38px;
-      }
-
-      .hero-copy .lead {
-        margin-bottom: 24px;
-      }
-
-      .reply-note {
-        margin-top: 12px;
-      }
-
-      .trust-strip {
-        gap: 8px;
-        margin-top: 20px;
-      }
-
-      .trust-pill {
-        min-height: 38px;
-        padding-inline: 12px;
-        font-size: 0.78rem;
-      }
-
-      .info-strip {
-        grid-template-columns: 1fr;
-        position: relative;
-        right: auto;
-        bottom: auto;
-        width: calc(100% - 32px);
-        margin: -68px auto 18px;
-      }
-
-      .info-item {
-        min-height: auto;
-        padding: 14px;
-      }
-
-      .card-grid,
-      .media-grid,
-      .gallery-grid,
-      .join-grid,
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .gallery-item,
-      .gallery-item:nth-child(1),
-      .gallery-item:nth-child(6) {
-        grid-column: auto;
-        height: auto;
-        min-height: 260px;
-        aspect-ratio: 4 / 3;
-      }
-
-      .facility {
-        min-height: 300px;
-      }
-
-      .map,
-      .map iframe {
-        min-height: 380px;
-      }
-
-      .review-head {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .review,
-      .card,
-      .join-card,
-      .timing-card,
-      .contact-item {
-        padding: 20px;
-      }
-
-      .score {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .rating-panel {
-        padding: 24px;
-      }
-
-      .footer {
-        padding-top: 40px;
-      }
-
-      .footer-grid {
-        gap: 24px;
-      }
-
-      .lightbox {
-        padding: 12px;
-      }
-
-      .lightbox-inner {
         width: 100%;
-        max-height: 84dvh;
-        border-radius: 20px;
+        justify-content: center;
+        text-align: center;
       }
 
-      .lightbox img {
-        max-height: 84dvh;
+      .wa-float {
+        bottom: 78px;
       }
 
-      .whatsapp-float {
-        right: 16px;
-        bottom: 16px;
-        width: 58px;
-        height: 58px;
+      .mobile-sticky-cta {
+        display: inline-flex;
+      }
+
+      .wa-tooltip {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
       }
     }
   </style>
 </head>
-<body class="is-loading">
-  <!-- Loading Screen -->
-  <div class="loader" id="loader" aria-label="Loading screen">
-    <div class="loader-box">
-      <img src="images/logo.png" alt="Health is Wealth Gym logo" />
-      <p>Loading Your Health...</p>
-      <div class="progress"><span id="progressBar"></span></div>
+<body>
+  <!-- Loader -->
+  <div id="loader" aria-live="polite" aria-label="Loading animation">
+    <div class="loader-content">
+      <div class="loader-dumbbell" aria-hidden="true"><span></span></div>
+      <img src="images/logo.png" alt="Health is Wealth Gym logo" class="loader-logo" />
+      <h2 class="loader-title">LOADING YOUR STRENGTH</h2>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loaderBar"></div>
+      </div>
+      <div class="loader-percent" id="loaderPercent">0%</div>
+      <div class="loader-sequence" id="loaderSequence">Building Strength...</div>
     </div>
   </div>
 
-  <!-- Navigation -->
-  <nav class="nav" id="nav" aria-label="Primary navigation">
-    <div class="nav-inner">
-      <a class="brand" href="#home" aria-label="Health is Wealth Gym home">
-        <img src="images/logo.png" alt="Health is Wealth Gym logo" />
-        <span>Health is Wealth Gym</span>
-      </a>
-      <div class="nav-links" id="navLinks">
-        <a href="#home">Home</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#timings">Timings</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-  <div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
+  <div id="site-content">
+    <!-- Navigation -->
+    <header class="navbar" id="navbar">
+      <div class="nav-inner">
+        <a href="#hero" class="brand">
+          <img src="images/logo.png" alt="Health is Wealth Gym" />
+          <div class="brand-text">
+            <div class="brand-title">Health is Wealth Gym</div>
+            <div class="brand-sub">Qasimabad, Hyderabad</div>
+          </div>
+        </a>
 
-  <main>
+        <nav class="nav-links" aria-label="Desktop navigation">
+          <a class="nav-link" href="#hero">Home</a>
+          <a class="nav-link" href="#inside-gym">Gym</a>
+          <a class="nav-link" href="#reviews">Reviews</a>
+          <a class="nav-link" href="#timings">Timings</a>
+          <a class="nav-link" href="#location">Contact</a>
+        </nav>
+
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile menu -->
+    <aside class="mobile-panel" id="mobilePanel" aria-label="Mobile navigation">
+      <a class="mobile-link" href="#hero">Home</a>
+      <a class="mobile-link" href="#inside-gym">Gym</a>
+      <a class="mobile-link" href="#reviews">Reviews</a>
+      <a class="mobile-link" href="#timings">Timings</a>
+      <a class="mobile-link" href="#location">Contact</a>
+    </aside>
+
     <!-- Hero -->
-    <section class="hero section" id="home">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <img class="hero-mark hero-reveal" src="images/logo.png" alt="Health is Wealth Gym logo" />
-          <span class="eyebrow hero-reveal">Main Qasimabad</span>
-          <h1 class="hero-reveal">Hyderabad&rsquo;s Most Trusted Gym in <span class="highlight">Qasimabad</span></h1>
-          <p class="lead hero-reveal">Real trainers. Real results. 100+ members already training.</p>
-          <div class="btn-row hero-reveal">
-            <a class="btn whatsapp-cta" href="https://wa.me/923133322817?text=Hi%2C%20I%20want%20to%20join%20the%20gym" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.94A10 10 0 0 0 3.35 17.06L2 22l5.06-1.32a10 10 0 1 0 11.99-15.74Zm-7.07 15.2a8.3 8.3 0 0 1-4.23-1.16l-.3-.18-3 .78.8-2.92-.2-.3a8.3 8.3 0 1 1 6.93 3.78Zm4.56-6.2c-.25-.13-1.49-.73-1.72-.81-.23-.09-.4-.13-.57.12-.17.25-.65.81-.8.98-.15.17-.3.19-.56.06-.25-.13-1.06-.39-2.03-1.24-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.52.12-.12.25-.3.37-.44.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.57-1.37-.78-1.88-.21-.5-.43-.43-.57-.44h-.49c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.02 2.61.13.17 1.76 2.69 4.26 3.77.59.26 1.05.42 1.41.54.59.19 1.13.16 1.55.1.47-.07 1.49-.61 1.7-1.2.21-.59.21-1.09.15-1.2-.06-.11-.23-.17-.48-.3Z"/></svg>
-              Join on WhatsApp
-            </a>
-            <a class="btn secondary" href="#gallery">View Gym Inside</a>
+    <section id="hero" class="hero">
+      <div class="hero-bg" id="heroBg"></div>
+      <div class="hero-content">
+        <div class="hero-badge hero-seq">⭐ 4.4 Rating (100+ Reviews)</div>
+        <p class="hero-kicker hero-seq">Main Qasimabad, Neroon Kot Tower, Hyderabad</p>
+        <h1>
+          <span class="hero-line">Simple Gym. Real Results.</span>
+        </h1>
+        <p class="hero-seq">Trusted by 100+ members in Qasimabad. Friendly trainers, clean environment, and everything you need to stay consistent.</p>
+        <p class="hero-trust hero-seq">✔ Beginner friendly&nbsp;&nbsp; ✔ Separate timings&nbsp;&nbsp; ✔ Supportive trainers</p>
+        <p class="micro-trust hero-seq">No pressure visit</p>
+        <div class="hero-cta hero-seq">
+          <a class="btn btn-primary cta-pulse magnetic" href="https://wa.me/923133322817" target="_blank" rel="noopener noreferrer">Start Today</a>
+          <a class="btn btn-secondary magnetic" href="#inside-gym">See Gym</a>
+        </div>
+        <p class="micro-trust hero-seq">Quick response on WhatsApp</p>
+      </div>
+    </section>
+
+    <!-- Offer section -->
+    <section id="offer" class="section offer">
+      <div class="container">
+        <article class="offer-card reveal-up tilt-card">
+          <span class="section-tag">Special Offer</span>
+          <h2>Start Your Fitness Journey Today</h2>
+          <p>Affordable plans + Expert Trainers. Begin with confidence and get free guidance on your first visit.</p>
+          <span class="offer-highlight">No long-term commitment</span>
+          <div class="hero-cta">
+            <a class="btn btn-primary magnetic" href="https://wa.me/923133322817" target="_blank" rel="noopener noreferrer">Claim Free Guidance</a>
+            <a class="btn btn-secondary magnetic" href="#timings">Check Timings</a>
           </div>
-          <p class="reply-note hero-reveal">⚡ Reply within minutes on WhatsApp</p>
-          <p class="cta-note hero-reveal">No forms. Just message and start.</p>
-          <div class="trust-strip hero-reveal">
-            <span class="trust-pill">⭐ 4.4 Rating</span>
-            <span class="trust-pill">👥 100+ Members</span>
-            <span class="trust-pill">📍 Qasimabad Location</span>
-          </div>
-          <div class="hero-story">Not Just a Gym. A Transformation.</div>
-        </div>
-
-        <div class="hero-media">
-          <div class="shape one parallax-shape" aria-hidden="true"></div>
-          <img src="images/hero-1.jpg" alt="Health is Wealth Gym training floor" />
-          <div class="info-strip hero-reveal">
-            <div class="info-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg><span>Location</span><strong>Qasimabad</strong></div>
-            <div class="info-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 2.9 6.1 6.6.9-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6L2.5 9l6.6-.9L12 2Z"/></svg><span>Google</span><strong>4.4 Rating</strong></div>
-            <div class="info-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7H5V4H3v16h2v-3h2v3h2V4H7v3Zm10-3v3h-2V4h-2v16h2v-3h2v3h2V4h-2ZM9 9h6v6H9V9Z"/></svg><span>Category</span><strong>Gym</strong></div>
-          </div>
-        </div>
-      </div>
-      <div class="urgency-bar">⚡ Limited slots available for ladies &amp; evening batches</div>
-    </section>
-
-    <!-- Power Moment -->
-    <section class="section power-moment blue-wash" id="power">
-      <div class="shape one parallax-shape" aria-hidden="true"></div>
-      <div class="shape two parallax-shape" aria-hidden="true"></div>
-      <div class="container">
-        <span class="eyebrow reveal">Start Strong</span>
-        <h2 class="power-title">Your Transformation Starts Here</h2>
-        <p class="power-copy">Step into a professional gym environment built for consistency, confidence, and visible progress.</p>
+        </article>
       </div>
     </section>
 
-    <!-- Real People -->
-    <section class="section" id="people">
+    <section id="inside-gym" class="section inside-gym">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow reveal">Real People</span>
-          <h2 class="reveal">Train Where Real People Transform</h2>
-          <p class="lead reveal">A real local gym with real members building confidence, strength, and consistency every week.</p>
-        </div>
-        <div class="people-grid">
-          <article class="people-card reveal-card"><img src="images/gym1.jpg" alt="Members training at Health is Wealth Gym" /></article>
-          <article class="people-card reveal-card"><img src="images/about-us.jpg" alt="Gym member training area" /></article>
-          <article class="people-card reveal-card"><img src="images/gym4.jpg" alt="Strength training at Health is Wealth Gym" /></article>
-        </div>
-      </div>
-    </section>
+        <span class="section-tag">Gym</span>
+        <h2 class="reveal-up">Inside the Gym</h2>
+        <p class="reveal-up">A clear look at the training space, equipment, and atmosphere members see on day one.</p>
 
-    <!-- Why People Join -->
-    <section class="section alt" id="join-reasons">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow reveal">Why People Join</span>
-          <h2 class="reveal">Why People Choose This Gym</h2>
-        </div>
-        <div class="join-grid">
-          <article class="join-card reveal-card"><span>📍</span><strong>Central location (Qasimabad)</strong></article>
-          <article class="join-card reveal-card"><span>💰</span><strong>Affordable membership</strong></article>
-          <article class="join-card reveal-card"><span>🧑‍🏫</span><strong>Friendly &amp; experienced trainers</strong></article>
-          <article class="join-card reveal-card"><span>🕒</span><strong>Separate ladies &amp; gents timings</strong></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why Choose Us -->
-    <section class="section" id="why">
-      <div class="shape one parallax-shape" aria-hidden="true"></div>
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow reveal">Why Choose Us</span>
-          <h2 class="reveal">Professional Fitness, Friendly Energy.</h2>
-          <p class="lead reveal">A clean training floor, practical support, and an environment that makes consistency easier.</p>
-        </div>
-        <div class="card-grid">
-          <article class="card reveal-card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.1 3.4 9.9 8 11 4.6-1.1 8-5.9 8-11V5l-8-3Zm3.6 7.8-4.3 5.4-2.9-2.9 1.4-1.4 1.3 1.3 2.9-3.7 1.6 1.3Z"/></svg></div>
-            <div><h3>Professional Trainers</h3><p>Guidance for form, routine, strength, and confidence.</p></div>
-          </article>
-          <article class="card reveal-card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M7 2h10v4h3v16H4V6h3V2Zm2 4h6V4H9v2Zm-1 5v2h8v-2H8Zm0 4v2h5v-2H8Z"/></svg></div>
-            <div><h3>Separate Timings</h3><p>Dedicated ladies and gents slots for a focused workout.</p></div>
-          </article>
-          <article class="card reveal-card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3V6Zm2 2v8h14V8H5Zm7 1a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"/></svg></div>
-            <div><h3>Affordable Plans</h3><p>Simple membership options for students, beginners, and regulars.</p></div>
-          </article>
-          <article class="card reveal-card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z"/></svg></div>
-            <div><h3>Friendly Environment</h3><p>Respectful, motivating, and welcoming for every fitness level.</p></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Facilities -->
-    <section class="section alt" id="facilities">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow reveal">Facilities</span>
-          <h2 class="reveal">Everything You Need To Train Better.</h2>
-        </div>
-        <div class="media-grid">
-          <article class="facility reveal-card parallax-media"><img src="images/gym1.jpg" alt="Weight training area" /><h3>Weight Training</h3></article>
-          <article class="facility reveal-card parallax-media"><img src="images/cardio.jpg" alt="Cardio equipment" /><h3>Cardio</h3></article>
-          <article class="facility reveal-card parallax-media"><img src="images/gym4.jpg" alt="Crossfit training zone" /><h3>Crossfit</h3></article>
-          <article class="facility reveal-card parallax-media"><img src="images/about-us.jpg" alt="Strength training area" /><h3>Strength Training</h3></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Real Gym Gallery -->
-    <section class="section" id="gallery">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow reveal">Real Gym Gallery</span>
-          <h2 class="reveal">A Clear Look Inside The Gym.</h2>
-          <p class="lead reveal">Real images from Health is Wealth Gym. Tap any photo to view it fullscreen.</p>
-        </div>
-        <div class="gallery-grid">
-          <button class="gallery-item gallery-reveal" type="button"><img src="images/gym1.jpg" alt="Gym equipment and training area" /><span class="gallery-label">Training Floor</span></button>
-          <button class="gallery-item gallery-reveal" type="button"><img src="images/gym2.jpg" alt="Gym equipment view" /><span class="gallery-label">Equipment</span></button>
-          <button class="gallery-item gallery-reveal" type="button"><img src="images/gym3.jpg" alt="Gym interior" /><span class="gallery-label">Interior</span></button>
-          <button class="gallery-item gallery-reveal" type="button"><img src="images/gym4.jpg" alt="Strength area" /><span class="gallery-label">Strength</span></button>
-          <button class="gallery-item gallery-reveal" type="button"><img src="images/gym5.jpg" alt="Workout area" /><span class="gallery-label">Workout</span></button>
-          <button class="gallery-item gallery-reveal" type="button"><img src="images/gym6.jpg" alt="Training floor" /><span class="gallery-label">Training</span></button>
-          <button class="gallery-item gallery-reveal" type="button"><img src="images/about-us.jpg" alt="Health is Wealth Gym floor" /><span class="gallery-label">Gym Floor</span></button>
-          <button class="gallery-item gallery-reveal" type="button"><img src="images/cardio.jpg" alt="Cardio machines" /><span class="gallery-label">Cardio</span></button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Reviews -->
-    <section class="section alt" id="reviews">
-      <div class="container">
-        <div class="reviews-wrap">
-          <aside class="rating-panel reveal">
-            <span class="review-kicker">Trusted by 100+ Members in Hyderabad</span>
-            <span class="eyebrow">Reviews</span>
-            <div class="score"><strong>4.4</strong><div><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>Based on 100+ reviews</p></div></div>
-            <p class="lead">Real member feedback from people training at Health is Wealth Gym.</p>
-            <div class="btn-row" style="margin-top: 24px;">
-              <a class="btn" href="https://www.google.com/search?q=Health+is+Wealth+Gym+Main+Qasimabad+Neroon+Kot+Tower" target="_blank" rel="noopener noreferrer">Read More Reviews on Google</a>
+        <div class="inside-grid">
+          <article class="inside-card reveal-up">
+            <img src="images/gym1.jpg" alt="Interior of Health is Wealth Gym" />
+            <div class="inside-copy">
+              <h3>Premium training floor</h3>
+              <p>Spacious, focused, and designed for daily consistency.</p>
             </div>
-          </aside>
+          </article>
 
-          <div>
-            <div class="review-tags reveal">
-              <span>Cooperative Owner</span>
-              <span>Coach</span>
-              <span>+6 more</span>
+          <article class="inside-card reveal-up">
+            <img src="images/gym2.jpg" alt="Gym floor and training zone" />
+            <div class="inside-copy">
+              <h3>Motivating environment</h3>
+              <p>Members stay engaged in a simple, energetic setting.</p>
             </div>
-            <div class="review-list">
-              <article class="review reveal-card">
-                <div class="review-head"><strong>Sameena Khokhar</strong><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
-                <p>&ldquo;It has been a wonderful experience, the overall environment is good, specially the trainer Ms Nadia is very professional. Only issue is ventilation, rest is best.&rdquo;</p>
-                <span class="verified"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5.1 3.4 9.9 8 11 4.6-1.1 8-5.9 8-11V5l-8-3Zm3.6 7.8-4.3 5.4-2.9-2.9 1.4-1.4 1.3 1.3 2.9-3.7 1.6 1.3Z"/></svg>Verified Member</span>
-              </article>
-              <article class="review reveal-card">
-                <div class="review-head"><strong>Mudassir Shah</strong><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
-                <p>&ldquo;Health is Wealth Gym is a game changer in Hyderabad. Trainers are helpful and environment is motivating.&rdquo;</p>
-                <span class="verified"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5.1 3.4 9.9 8 11 4.6-1.1 8-5.9 8-11V5l-8-3Zm3.6 7.8-4.3 5.4-2.9-2.9 1.4-1.4 1.3 1.3 2.9-3.7 1.6 1.3Z"/></svg>Verified Member</span>
-              </article>
-              <article class="review reveal-card">
-                <div class="review-head"><strong>Bhawani Shanker Rohail</strong><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
-                <p>&ldquo;Gents and ladies gym with very experienced and cooperative trainers.&rdquo;</p>
-                <span class="verified"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5.1 3.4 9.9 8 11 4.6-1.1 8-5.9 8-11V5l-8-3Zm3.6 7.8-4.3 5.4-2.9-2.9 1.4-1.4 1.3 1.3 2.9-3.7 1.6 1.3Z"/></svg>Verified Member</span>
-              </article>
+          </article>
+
+          <article class="inside-card reveal-up">
+            <img src="images/gym3.jpg" alt="Members training in gym" />
+            <div class="inside-copy">
+              <h3>Cooperative coaches</h3>
+              <p>Clear guidance that helps beginners and regulars stay on track.</p>
             </div>
-          </div>
+          </article>
+
+          <article class="inside-card reveal-up">
+            <img src="images/dumbel.jpg" alt="Dumbbell and equipment showcase" />
+            <div class="inside-copy">
+              <h3>Modern equipment</h3>
+              <p>Reliable machines and free weights for practical results.</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- Timings -->
-    <section class="section" id="timings">
+    <!-- Timings section -->
+    <section id="timings" class="section timings">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow reveal">Timings</span>
-          <h2 class="reveal">Train At The Time That Fits Your Life.</h2>
-        </div>
+        <span class="section-tag">Open Hours</span>
+        <h2 class="reveal-up">Gym Timings</h2>
         <div class="timings-grid">
-          <article class="timing-card reveal-card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z"/></svg></div>
-            <h3>Ladies</h3>
-            <div class="time">9:00 AM - 6:00 PM</div>
+          <article class="time-card reveal-up">
+            <div class="time-label">Ladies</div>
+            <div class="time-value">9:00 AM - 6:00 PM</div>
           </article>
-          <article class="timing-card reveal-card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 10.4 4 2.3-1 1.7-5-2.9V6h2v6.4Z"/></svg></div>
-            <h3>Gents Morning</h3>
-            <div class="time">6:00 - 8:45 AM</div>
+          <article class="time-card reveal-up">
+            <div class="time-label">Gents Morning</div>
+            <div class="time-value">6:00 AM - 8:45 AM</div>
           </article>
-          <article class="timing-card reveal-card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M20 8.7V5h-3.7L12 1 7.7 5H4v3.7L1 12l3 3.3V19h3.7l4.3 4 4.3-4H20v-3.7l3-3.3-3-3.3ZM13 17h-2v-2h2v2Zm0-4h-2V7h2v6Z"/></svg></div>
-            <h3>Gents Evening</h3>
-            <div class="time">6:30 PM - 1:00 AM</div>
+          <article class="time-card reveal-up">
+            <div class="time-label">Gents Evening</div>
+            <div class="time-value">6:30 PM - 1:00 AM</div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Conversion CTA -->
-    <section class="section conversion-cta" id="start">
+    <!-- FAQ section -->
+    <section id="faq" class="section faq">
       <div class="container">
-        <span class="eyebrow reveal">Join Now</span>
-        <h2 class="reveal">Start Today. Message Us on WhatsApp.</h2>
-        <p class="reveal">Ask about membership, timings, and the best plan for your fitness goal.</p>
-        <div class="btn-row reveal" style="justify-content:center;">
-          <a class="btn whatsapp-cta big" href="https://wa.me/923133322817?text=Hi%2C%20I%20want%20to%20join%20the%20gym" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.94A10 10 0 0 0 3.35 17.06L2 22l5.06-1.32a10 10 0 1 0 11.99-15.74Zm-7.07 15.2a8.3 8.3 0 0 1-4.23-1.16l-.3-.18-3 .78.8-2.92-.2-.3a8.3 8.3 0 1 1 6.93 3.78Zm4.56-6.2c-.25-.13-1.49-.73-1.72-.81-.23-.09-.4-.13-.57.12-.17.25-.65.81-.8.98-.15.17-.3.19-.56.06-.25-.13-1.06-.39-2.03-1.24-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.52.12-.12.25-.3.37-.44.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.57-1.37-.78-1.88-.21-.5-.43-.43-.57-.44h-.49c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.02 2.61.13.17 1.76 2.69 4.26 3.77.59.26 1.05.42 1.41.54.59.19 1.13.16 1.55.1.47-.07 1.49-.61 1.7-1.2.21-.59.21-1.09.15-1.2-.06-.11-.23-.17-.48-.3Z"/></svg>
-            Message on WhatsApp
-          </a>
-          <p class="cta-note" style="flex-basis:100%; color:rgba(255,255,255,0.72);">No forms. Just message and start.</p>
+        <span class="section-tag">FAQ</span>
+        <h2 class="reveal-up">Common Questions</h2>
+        <div class="faq-list" id="faqList">
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false"><span>Is this gym good for beginners?</span><span>+</span></button>
+            <div class="faq-a"><div class="faq-a-inner">Yes, trainers guide you step by step.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false"><span>Do you have separate timings for ladies?</span><span>+</span></button>
+            <div class="faq-a"><div class="faq-a-inner">Yes, dedicated timing ensures comfort.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false"><span>Do I need a long-term commitment?</span><span>+</span></button>
+            <div class="faq-a"><div class="faq-a-inner">No, flexible plans available.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false"><span>Will trainers help me personally?</span><span>+</span></button>
+            <div class="faq-a"><div class="faq-a-inner">Yes, trainers are cooperative and guide regularly.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button" aria-expanded="false"><span>Is the gym crowded?</span><span>+</span></button>
+            <div class="faq-a"><div class="faq-a-inner">Balanced environment, not overcrowded.</div></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Location and Contact -->
-    <section class="section alt" id="contact">
+    <!-- Reviews section -->
+    <section id="reviews" class="section reviews">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow reveal">Location + Contact</span>
-          <h2 class="reveal">Main Qasimabad. Easy To Find. Easy To Join.</h2>
+        <span class="section-tag">Community Feedback</span>
+        <h2 class="reveal-up">Rated 4.4 By 100+ Members</h2>
+        <div class="reviews-badges reveal-up">
+          <div class="trust-badge">Verified Local Reviews</div>
         </div>
-        <div class="contact-grid">
-          <div class="map reveal">
+
+        <div class="reviews-grid">
+          <article class="review reveal-up tilt-card">
+            <div class="stars">★★★★★</div>
+            <h3>Sameena Khokhar</h3>
+            <p>Wonderful experience. Trainer Ms Nadia is a <strong>professional trainer</strong> and cooperative. The gym environment is very good, only AC needs improvement.</p>
+          </article>
+
+          <article class="review reveal-up tilt-card">
+            <div class="stars">★★★★★</div>
+            <h3>Mudassir Shah</h3>
+            <p>A <strong>game changer gym</strong> in Hyderabad. Great motivation, better routines, and strong local community support.</p>
+          </article>
+
+          <article class="review reveal-up tilt-card">
+            <div class="stars">★★★★★</div>
+            <h3>Bhawani Rohail</h3>
+            <p>Experienced and cooperative trainers. Their guidance helps people stay consistent and improve safely.</p>
+          </article>
+        </div>
+
+        <div class="reviews-cta reveal-up">
+          <a href="https://www.google.com/search?q=Health+is+Wealth+Gym+Main+Qasimabad+Neroon+Kot+Tower" target="_blank" rel="noopener noreferrer">Read More Reviews on Google</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Location and contact -->
+    <section id="location" class="section location">
+      <div class="container">
+        <span class="section-tag">Visit Us</span>
+        <h2 class="reveal-up">Main Qasimabad, Neroon Kot Tower</h2>
+        <p class="reveal-up">Visit today or message us instantly for the latest schedule and directions.</p>
+
+        <div class="loc-grid">
+          <div class="map-box reveal-up">
             <iframe
-              src="https://www.google.com/maps?q=Neroon%20Kot%20Tower%20Main%20Qasimabad%20Hyderabad%20Pakistan&output=embed"
               loading="lazy"
               allowfullscreen
               referrerpolicy="no-referrer-when-downgrade"
-              title="Neroon Kot Tower Main Qasimabad Hyderabad map">
-            </iframe>
+              src="https://www.google.com/maps?q=Health+is+Wealth+Gym+Main+Qasimabad+Neroon+Kot+Tower,+Hyderabad,+Pakistan&output=embed"
+              title="Health is Wealth Gym location"
+            ></iframe>
           </div>
 
-          <div class="contact-panel">
-            <div class="contact-item reveal-card">
-              <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg></div>
-              <div><strong>Address</strong><a href="https://www.google.com/maps/search/?api=1&query=Neroon+Kot+Tower+Main+Qasimabad+Hyderabad+Pakistan" target="_blank" rel="noopener noreferrer">Neroon Kot Tower, Main Qasimabad, Hyderabad</a></div>
+          <div class="contact-box reveal-up">
+            <div class="contact-item">
+              <div class="contact-label">Phone</div>
+              <div class="contact-value contact-hotline"><a href="tel:+923133322817">+92 313 3322817</a></div>
             </div>
-            <div class="contact-item reveal-card">
-              <div class="icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.3 2.6 3.4 4.7 6 6l2-2c.2-.2.5-.3.8-.2 1 .3 2 .4 3 .4.4 0 .7.3.7.7V19c0 .4-.3.7-.7.7C10.6 19.7 4.3 13.4 4.3 5.6c0-.4.3-.7.7-.7h3.3c.4 0 .7.3.7.7 0 1 .1 2 .4 3 .1.3 0 .6-.2.8l-2 1.4Z"/></svg></div>
-              <div><strong>Phone</strong><a href="tel:+923133322817">0313-3322817</a></div>
+
+            <div class="contact-item">
+              <div class="contact-label">Location</div>
+              <div class="contact-value">Neroon Kot Tower, Qasimabad, Hyderabad, Pakistan</div>
             </div>
-            <div class="contact-item reveal-card">
-              <div class="icon"><svg viewBox="0 0 24 24"><path d="M19.05 4.94A10 10 0 0 0 3.35 17.06L2 22l5.06-1.32a10 10 0 1 0 11.99-15.74Zm-7.07 15.2a8.3 8.3 0 0 1-4.23-1.16l-.3-.18-3 .78.8-2.92-.2-.3a8.3 8.3 0 1 1 6.93 3.78Zm4.56-6.2c-.25-.13-1.49-.73-1.72-.81-.23-.09-.4-.13-.57.12-.17.25-.65.81-.8.98-.15.17-.3.19-.56.06-.25-.13-1.06-.39-2.03-1.24-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.52.12-.12.25-.3.37-.44.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.57-1.37-.78-1.88-.21-.5-.43-.43-.57-.44h-.49c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.02 2.61.13.17 1.76 2.69 4.26 3.77.59.26 1.05.42 1.41.54.59.19 1.13.16 1.55.1.47-.07 1.49-.61 1.7-1.2.21-.59.21-1.09.15-1.2-.06-.11-.23-.17-.48-.3Z"/></svg></div>
-              <div><strong>WhatsApp</strong><a href="https://wa.me/923133322817?text=Hi%2C%20I%20want%20to%20join%20the%20gym" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a></div>
+
+            <div class="contact-item">
+              <div class="contact-label">Open Hours</div>
+              <div class="contact-value">Ladies: 9am - 6pm<br />Gents: 6am - 8:45am & 6:30pm - 1am</div>
             </div>
-            <div class="contact-item reveal-card">
-              <div class="icon"><svg viewBox="0 0 24 24"><path d="M13.5 8.5V6.6c0-.8.5-1.1 1.1-1.1h1.7V2.5h-2.6c-2.9 0-3.7 2.1-3.7 3.5v2.5H8v3h2v9h3.5v-9h2.5l.4-3h-2.9Z"/></svg></div>
-              <div><strong>Facebook</strong><a href="https://www.facebook.com/HealthisWealthHyd/" target="_blank" rel="noopener noreferrer">facebook.com/HealthisWealthHyd</a></div>
+
+            <div class="contact-item">
+              <div class="contact-label">Social</div>
+              <div class="social-head">
+                <div class="social-title">Follow & See Real Activity</div>
+                <div class="social-subtext">See real workouts, updates, and gym environment</div>
+                <div class="social-subtext social-proof">Active posts & real members</div>
+                <div class="social-subtext social-proof">Updated regularly</div>
+              </div>
+              <div class="social-set">
+                <a class="social-item facebook" href="https://www.facebook.com/Ph1Qasimabad/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                  <span class="social">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 8H16V5H14C11.7909 5 10 6.79086 10 9V11H8V14H10V19H13V14H16L17 11H13V9C13 8.44772 13.4477 8 14 8Z" fill="currentColor"/></svg>
+                  </span>
+                  <span class="social-label">Facebook</span>
+                </a>
+                <a class="social-item instagram" href="https://www.facebook.com/Ph1Qasimabad/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <span class="social">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="6" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="4.1" stroke="currentColor" stroke-width="2.2"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
+                  </span>
+                  <span class="social-label">Instagram</span>
+                </a>
+              </div>
             </div>
-            <div class="contact-item reveal-card">
-              <div class="icon"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.2 1.8a1.4 1.4 0 1 1 0 2.8 1.4 1.4 0 0 1 0-2.8ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></div>
-              <div><strong>Instagram</strong><a href="https://www.instagram.com/health_is_wealthgym_neroon_kot/" target="_blank" rel="noopener noreferrer">@health_is_wealthgym_neroon_kot</a></div>
+
+            <div class="contact-push">Visit today or message us instantly to get your best schedule and plan.</div>
+
+            <div class="contact-cta-row">
+              <a class="btn btn-secondary magnetic" href="https://www.google.com/maps/place/Health+is+Wealth+Gym+Main+Qasimabad+Neroon+Kot+Tower/@25.3946094,68.2580584" target="_blank" rel="noopener noreferrer">Get Directions</a>
+              <a class="btn btn-primary magnetic" href="https://wa.me/923133322817" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="section" id="faq">
-      <div class="shape two parallax-shape" aria-hidden="true"></div>
+    <!-- Final CTA -->
+    <section class="final-cta">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow reveal">Questions</span>
-          <h2 class="reveal">Frequently Asked Questions</h2>
-        </div>
-        <div class="faq-list">
-          <article class="faq-item reveal-card active">
-            <button class="faq-question" type="button">
-              What are the gym timings?
-              <span class="faq-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5H7Z"/></svg></span>
-            </button>
-            <div class="faq-answer"><p>Ladies: 9 AM - 6 PM<br />Gents: Morning &amp; Evening shifts</p></div>
-          </article>
-          <article class="faq-item reveal-card">
-            <button class="faq-question" type="button">
-              Is there a separate timing for ladies?
-              <span class="faq-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5H7Z"/></svg></span>
-            </button>
-            <div class="faq-answer"><p>Yes, dedicated comfortable timing for ladies.</p></div>
-          </article>
-          <article class="faq-item reveal-card">
-            <button class="faq-question" type="button">
-              Do you have professional trainers?
-              <span class="faq-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5H7Z"/></svg></span>
-            </button>
-            <div class="faq-answer"><p>Yes, experienced and cooperative trainers available.</p></div>
-          </article>
-          <article class="faq-item reveal-card">
-            <button class="faq-question" type="button">
-              How can I join the gym?
-              <span class="faq-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5H7Z"/></svg></span>
-            </button>
-            <div class="faq-answer"><p>Simply click the WhatsApp button and contact us instantly.</p></div>
-          </article>
-          <article class="faq-item reveal-card">
-            <button class="faq-question" type="button">
-              Is the gym suitable for beginners?
-              <span class="faq-arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5H7Z"/></svg></span>
-            </button>
-            <div class="faq-answer"><p>Yes, beginners are fully guided step-by-step.</p></div>
-          </article>
+        <div class="final-cta-card reveal-up">
+          <span class="section-tag">Final Step</span>
+          <h2>Start Your Fitness Journey Today</h2>
+          <p>No pressure. Just come once and see the environment.</p>
+          <div class="final-reassurance">Come for a visit. No signup needed. See the gym, talk to trainer, decide later.</div>
+          <a class="btn btn-primary magnetic" href="https://wa.me/923133322817" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+          <div class="micro-trust" style="margin-top:10px;">Most people visit once… and continue.</div>
+          <div class="final-note">Quick response on WhatsApp</div>
         </div>
       </div>
     </section>
-  </main>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-grid">
-      <div>
-        <img class="footer-logo" src="images/logo.png" alt="Health is Wealth Gym logo" />
-        <h3>Health is Wealth Gym</h3>
-        <p>Stronger. Better. Everyday.</p>
-      </div>
-      <div>
-        <h3>Quick Links</h3>
-        <a href="#home">Home</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#timings">Timings</a>
-        <a href="#reviews">Reviews</a>
-      </div>
-      <div>
-        <h3>Contact</h3>
-        <p>Neroon Kot Tower, Main Qasimabad, Hyderabad</p>
-        <a href="tel:+923133322817">0313-3322817</a>
-        <a href="https://wa.me/923133322817?text=Hi%2C%20I%20want%20to%20join%20the%20gym" target="_blank" rel="noopener noreferrer">WhatsApp inquiry</a>
-      </div>
-      <div>
-        <h3>Social</h3>
-        <div class="socials">
-          <a href="https://www.facebook.com/HealthisWealthHyd/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 8.5V6.6c0-.8.5-1.1 1.1-1.1h1.7V2.5h-2.6c-2.9 0-3.7 2.1-3.7 3.5v2.5H8v3h2v9h3.5v-9h2.5l.4-3h-2.9Z"/></svg></a>
-          <a href="https://www.instagram.com/health_is_wealthgym_neroon_kot/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6Zm9.2 1.8a1.4 1.4 0 1 1 0 2.8 1.4 1.4 0 0 1 0-2.8ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg></a>
-          <a href="https://wa.me/923133322817?text=Hi%2C%20I%20want%20to%20join%20the%20gym" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M19.05 4.94A10 10 0 0 0 3.35 17.06L2 22l5.06-1.32a10 10 0 1 0 11.99-15.74Zm-7.07 15.2a8.3 8.3 0 0 1-4.23-1.16l-.3-.18-3 .78.8-2.92-.2-.3a8.3 8.3 0 1 1 6.93 3.78Zm4.56-6.2c-.25-.13-1.49-.73-1.72-.81-.23-.09-.4-.13-.57.12-.17.25-.65.81-.8.98-.15.17-.3.19-.56.06-.25-.13-1.06-.39-2.03-1.24-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.52.12-.12.25-.3.37-.44.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.57-1.37-.78-1.88-.21-.5-.43-.43-.57-.44h-.49c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.02 2.61.13.17 1.76 2.69 4.26 3.77.59.26 1.05.42 1.41.54.59.19 1.13.16 1.55.1.47-.07 1.49-.61 1.7-1.2.21-.59.21-1.09.15-1.2-.06-.11-.23-.17-.48-.3Z"/></svg></a>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="footer-title">Health is Wealth Gym</div>
+          <div>Main Qasimabad, Neroon Kot Tower, Hyderabad</div>
+          <div class="footer-muted">Serving Qasimabad community with a reliable training space.</div>
+        </div>
+        <div>
+          <div class="footer-title">Quick Links</div>
+          <div class="footer-links">
+            <a href="#hero">Home</a>
+            <a href="#inside-gym">Gym</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#location">Contact</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-title">Contact</div>
+          <div class="footer-links">
+            <a href="tel:+923133322817">Phone: +92 313 3322817</a>
+            <a href="#location">Location: Neroon Kot Tower</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-title">Stay Connected</div>
+          <div class="footer-socials">
+            <a class="social facebook" href="https://www.facebook.com/Ph1Qasimabad/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 8H16V5H14C11.7909 5 10 6.79086 10 9V11H8V14H10V19H13V14H16L17 11H13V9C13 8.44772 13.4477 8 14 8Z" fill="currentColor"/></svg>
+            </a>
+            <a class="social instagram" href="https://www.facebook.com/Ph1Qasimabad/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="6" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="4.1" stroke="currentColor" stroke-width="2.2"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
+            </a>
+          </div>
+          <div class="footer-social-label">Follow us for updates and gym activity</div>
         </div>
       </div>
-    </div>
-    <div class="copyright">Copyright 2026 Health is Wealth Gym. All rights reserved.</div>
-  </footer>
-
-  <!-- Floating WhatsApp -->
-  <a class="whatsapp-float" href="https://wa.me/923133322817?text=Hi%2C%20I%20want%20to%20join%20the%20gym" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.05 4.94A10 10 0 0 0 3.35 17.06L2 22l5.06-1.32a10 10 0 1 0 11.99-15.74Zm-7.07 15.2a8.3 8.3 0 0 1-4.23-1.16l-.3-.18-3 .78.8-2.92-.2-.3a8.3 8.3 0 1 1 6.93 3.78Zm4.56-6.2c-.25-.13-1.49-.73-1.72-.81-.23-.09-.4-.13-.57.12-.17.25-.65.81-.8.98-.15.17-.3.19-.56.06-.25-.13-1.06-.39-2.03-1.24-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.52.12-.12.25-.3.37-.44.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.57-1.37-.78-1.88-.21-.5-.43-.43-.57-.44h-.49c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.02 2.61.13.17 1.76 2.69 4.26 3.77.59.26 1.05.42 1.41.54.59.19 1.13.16 1.55.1.47-.07 1.49-.61 1.7-1.2.21-.59.21-1.09.15-1.2-.06-.11-.23-.17-.48-.3Z"/></svg>
-  </a>
-
-  <!-- Gallery Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightbox-inner">
-      <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close gallery image">&times;</button>
-      <img id="lightboxImg" src="" alt="Gallery preview" />
-    </div>
+    </footer>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <!-- Floating WhatsApp -->
+  <a class="wa-float" href="https://wa.me/923133322817" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <span class="wa-tooltip">Quick response within minutes</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.52 3.48A11.78 11.78 0 0 0 12.13 0C5.5 0 .13 5.37.13 12c0 2.12.56 4.18 1.62 6L0 24l6.2-1.62A11.92 11.92 0 0 0 12.13 24h.01c6.63 0 12-5.37 12-12 0-3.2-1.25-6.2-3.62-8.52Zm-8.39 18.5h-.01a9.89 9.89 0 0 1-5.04-1.38l-.36-.21-3.68.97.98-3.58-.24-.37a9.9 9.9 0 1 1 8.35 4.57Zm5.45-7.41c-.3-.15-1.79-.88-2.06-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.96 1.18-.18.2-.35.23-.66.08-.3-.15-1.25-.46-2.39-1.45-.88-.78-1.48-1.73-1.65-2.03-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.68-1.64-.93-2.24-.25-.6-.5-.5-.68-.51h-.58c-.2 0-.53.08-.8.38-.28.3-1.05 1.03-1.05 2.52s1.08 2.93 1.23 3.13c.15.2 2.12 3.24 5.14 4.54.72.31 1.28.5 1.72.64.72.23 1.37.2 1.89.12.58-.09 1.79-.73 2.04-1.43.25-.7.25-1.29.18-1.43-.08-.14-.28-.23-.58-.38Z"/>
+    </svg>
+  </a>
+
+  <a class="mobile-sticky-cta magnetic" href="https://wa.me/923133322817" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp for details">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.78 11.78 0 0 0 12.13 0C5.5 0 .13 5.37.13 12c0 2.12.56 4.18 1.62 6L0 24l6.2-1.62A11.92 11.92 0 0 0 12.13 24h.01c6.63 0 12-5.37 12-12 0-3.2-1.25-6.2-3.62-8.52Zm-8.39 18.5h-.01a9.89 9.89 0 0 1-5.04-1.38l-.36-.21-3.68.97.98-3.58-.24-.37a9.9 9.9 0 1 1 8.35 4.57Z"/></svg>
+    Chat on WhatsApp - Get Details
+  </a>
+
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
     const loader = document.getElementById("loader");
-    const progressBar = document.getElementById("progressBar");
-    const nav = document.getElementById("nav");
-    const menuToggle = document.getElementById("menuToggle");
-    const navLinks = document.getElementById("navLinks");
-    const menuOverlay = document.getElementById("menuOverlay");
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightboxImg");
-    const lightboxClose = document.getElementById("lightboxClose");
-    const faqItems = document.querySelectorAll(".faq-item");
-    const isMobile = window.matchMedia("(max-width: 880px)");
-    let menuOpen = false;
+    const siteContent = document.getElementById("site-content");
+    const loaderBar = document.getElementById("loaderBar");
+    const loaderPercent = document.getElementById("loaderPercent");
+    const loaderSequence = document.getElementById("loaderSequence");
+    const navbar = document.getElementById("navbar");
+    const menuBtn = document.getElementById("menuBtn");
+    const mobilePanel = document.getElementById("mobilePanel");
+    const waFloat = document.querySelector(".wa-float");
 
-    if (window.innerWidth <= 880) {
-      gsap.set(navLinks, { xPercent: 100 });
-    } else {
-      gsap.set(navLinks, { xPercent: 0 });
-    }
+    // Simulated premium loader with percentage and smooth exit
+    const loadingState = { value: 0 };
+    const loaderTl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
-    const loadTimeline = gsap.timeline({
-      defaults: { ease: "power3.out" },
-      onComplete: () => {
-        loader.style.display = "none";
-        document.body.classList.remove("is-loading");
-        animateHero();
-      }
-    });
-
-    loadTimeline
-      .from(".loader img", { opacity: 0, y: 14, scale: 0.96, duration: 0.45 })
-      .from(".loader p", { opacity: 0, y: 10, duration: 0.36 }, "-=0.16")
-      .to(progressBar, { width: "100%", duration: 0.9, ease: "power2.inOut" })
-      .to(loader, { opacity: 0, duration: 0.45, delay: 0.08 });
-
-    function animateHero() {
-      gsap.from(".hero-reveal", {
-        opacity: 0,
-        y: isMobile.matches ? 18 : 26,
-        duration: isMobile.matches ? 0.72 : 0.95,
-        stagger: isMobile.matches ? 0.075 : 0.11,
-        ease: "power3.out"
-      });
-
-      gsap.from(".hero-media", {
-        opacity: 0,
-        x: isMobile.matches ? 0 : 34,
-        y: isMobile.matches ? 18 : 0,
-        duration: isMobile.matches ? 0.76 : 1.05,
-        ease: "power3.out"
-      });
-
-      gsap.to(".hero-media img", {
-        scale: 1.02,
-        duration: isMobile.matches ? 1 : 1.6,
-        ease: "power2.out"
-      });
-
-      gsap.from(".urgency-bar", {
-        opacity: 0,
-        y: 12,
-        duration: isMobile.matches ? 0.65 : 0.9,
-        delay: 0.35,
-        ease: "power3.out"
-      });
-    }
-
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: 1
+    loaderTl.to(loadingState, {
+      value: 100,
+      duration: 2.2,
+      onUpdate: () => {
+        const val = Math.round(loadingState.value);
+        loaderBar.style.width = val + "%";
+        loaderPercent.textContent = val + "%";
+        if (val > 55) {
+          loaderSequence.textContent = "Loading Energy...";
+        } else {
+          loaderSequence.textContent = "Building Strength...";
+        }
       }
     })
-      .to(".hero-copy > :not(.hero-story)", { scale: isMobile.matches ? 0.97 : 0.92, y: isMobile.matches ? -12 : -34, opacity: isMobile.matches ? 0.7 : 0.46, transformOrigin: "left center", ease: "none" }, 0)
-      .to(".hero-media img", { scale: isMobile.matches ? 1.07 : 1.16, ease: "none" }, 0)
-      .to(".hero", { background: "linear-gradient(180deg, #FFFFFF, rgba(0, 194, 255, 0.18), #F8FAFC)", ease: "none" }, 0)
-      .to(".hero-story", { opacity: 1, y: 0, scale: 1, ease: "none" }, 0.35);
-
-    gsap.to(".power-moment", {
-      backgroundPosition: "100% 50%",
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".power-moment",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true
+    .to(loader, {
+      autoAlpha: 0,
+      duration: 0.65,
+      onComplete: () => {
+        loader.style.display = "none";
       }
+    })
+    .to(siteContent, { autoAlpha: 1, duration: 0.5 }, "<0.15")
+    .add(() => {
+      initAnimations();
     });
 
-    gsap.from(".power-title", {
-      opacity: 0,
-      scale: 0.92,
-      y: 28,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".power-moment",
-        start: "top 68%"
-      }
-    });
-
-    gsap.from(".power-copy", {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      delay: 0.08,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".power-moment",
-        start: "top 68%"
-      }
-    });
-
-    ScrollTrigger.create({
-      start: 24,
-      end: "max",
-      onUpdate: (self) => nav.classList.toggle("scrolled", self.scroll() > 24)
-    });
-
-    function openMenu() {
-      if (menuOpen) return;
-      menuOpen = true;
-
-      menuToggle.classList.add("active");
-      document.body.classList.add("menu-open");
-      menuOverlay.style.pointerEvents = "auto";
-
-      menuToggle.setAttribute("aria-expanded", "true");
-      gsap.killTweensOf([navLinks, menuOverlay]);
-
-      const links = navLinks.querySelectorAll("a");
-      links.forEach(link => {
-        link.style.opacity = "1";
-        link.style.transform = "none";
-        link.style.visibility = "visible";
-      });
-
-      gsap.to(navLinks, {
-        xPercent: 0,
-        duration: 0.4,
+    function initAnimations() {
+      gsap.from(".hero-line", {
+        y: 50,
+        opacity: 0,
+        duration: 0.85,
+        stagger: 0.12,
         ease: "power3.out"
       });
 
-      gsap.to(menuOverlay, {
-        opacity: 1,
-        duration: 0.3
-      });
-    }
-
-    function closeMenu() {
-      if (!menuOpen) return;
-      menuOpen = false;
-
-      menuToggle.classList.remove("active");
-      document.body.classList.remove("menu-open");
-      menuToggle.setAttribute("aria-expanded", "false");
-
-      gsap.killTweensOf([navLinks, menuOverlay]);
-
-      gsap.to(navLinks, {
-        xPercent: 100,
-        duration: 0.35,
-        ease: "power3.inOut"
-      });
-
-      gsap.to(menuOverlay, {
+      gsap.from(".hero-seq", {
+        y: 24,
         opacity: 0,
-        duration: 0.25,
-        onComplete: () => {
-          menuOverlay.style.pointerEvents = "none";
+        duration: 0.7,
+        stagger: 0.08,
+        ease: "power2.out",
+        delay: 0.08
+      });
+
+      gsap.to("#heroBg", {
+        scale: 1.08,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.8
         }
       });
+
+      // Transparent to solid navbar transition
+      ScrollTrigger.create({
+        start: "top -90",
+        onUpdate: self => {
+          navbar.classList.toggle("scrolled", self.progress > 0);
+        }
+      });
+
+      gsap.utils.toArray(".inside-card, .offer-card, .time-card, .review, .map-box, .contact-box").forEach((el) => {
+        gsap.from(el, {
+          y: 30,
+          opacity: 0,
+          scale: 0.98,
+          duration: 0.75,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 90%"
+          }
+        });
+      });
+
+      gsap.utils.toArray(".section").forEach((section) => {
+        gsap.fromTo(section,
+          { filter: "brightness(0.97)" },
+          {
+            filter: "brightness(1)",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "top 72%",
+              scrub: 1
+            }
+          }
+        );
+      });
+
+      gsap.utils.toArray(".inside-card img").forEach((image) => {
+        gsap.fromTo(image,
+          { scale: 1.04 },
+          {
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: image,
+              start: "top 92%",
+              end: "top 55%",
+              scrub: 0.8
+            }
+          }
+        );
+      });
+
+      ScrollTrigger.create({
+        trigger: "#offer",
+        start: "top 75%",
+        endTrigger: "#location",
+        end: "bottom 20%",
+        onToggle: (self) => {
+          waFloat.classList.toggle("pulse-boost", self.isActive);
+        }
+      });
+
+      initFaqAccordion();
     }
 
-    menuToggle.addEventListener("click", () => {
-      menuOpen ? closeMenu() : openMenu();
+    function initFaqAccordion() {
+      const items = document.querySelectorAll(".faq-item");
+
+      items.forEach((item) => {
+        const button = item.querySelector(".faq-q");
+        const answer = item.querySelector(".faq-a");
+        const answerInner = item.querySelector(".faq-a-inner");
+
+        gsap.set(answer, { height: 0, opacity: 0 });
+
+        button.addEventListener("click", () => {
+          const isOpen = item.classList.contains("open");
+
+          items.forEach((otherItem) => {
+            if (otherItem !== item && otherItem.classList.contains("open")) {
+              const otherButton = otherItem.querySelector(".faq-q");
+              const otherAnswer = otherItem.querySelector(".faq-a");
+              otherItem.classList.remove("open");
+              otherButton.setAttribute("aria-expanded", "false");
+              gsap.to(otherAnswer, { height: 0, opacity: 0, duration: 0.25, ease: "power2.out" });
+            }
+          });
+
+          if (isOpen) {
+            item.classList.remove("open");
+            button.setAttribute("aria-expanded", "false");
+            gsap.to(answer, { height: 0, opacity: 0, duration: 0.25, ease: "power2.out" });
+          } else {
+            item.classList.add("open");
+            button.setAttribute("aria-expanded", "true");
+            gsap.to(answer, {
+              height: answerInner.scrollHeight,
+              opacity: 1,
+              duration: 0.28,
+              ease: "power2.out"
+            });
+          }
+        });
+      });
+    }
+
+    // Smooth anchor scroll and mobile menu behavior
+    function closeMenu() {
+      mobilePanel.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("menu-open");
+    }
+
+    menuBtn.addEventListener("click", () => {
+      const opening = !mobilePanel.classList.contains("open");
+      mobilePanel.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(opening));
+      document.body.classList.toggle("menu-open", opening);
     });
 
-    menuOverlay.addEventListener("click", closeMenu);
-
-    navLinks.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const target = link.getAttribute("href");
+        if (!target || target === "#") return;
+        const section = document.querySelector(target);
+        if (!section) return;
+        e.preventDefault();
         closeMenu();
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
       });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!mobilePanel.classList.contains("open")) return;
+      const clickedInsideMenu = mobilePanel.contains(event.target);
+      const clickedMenuBtn = menuBtn.contains(event.target);
+      if (!clickedInsideMenu && !clickedMenuBtn) closeMenu();
     });
 
     window.addEventListener("resize", () => {
-      if (!isMobile.matches) {
-        menuOpen = false;
-        document.body.classList.remove("menu-open");
-        menuToggle.classList.remove("active");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuOverlay.style.pointerEvents = "none";
-        gsap.set(menuOverlay, { opacity: 0 });
-        gsap.set(navLinks, { xPercent: 0 });
-      } else if (!menuOpen) {
-        gsap.set(navLinks, { xPercent: 100 });
-      }
-    });
-
-    gsap.utils.toArray(".reveal").forEach((el) => {
-      gsap.from(el, {
-        opacity: 0,
-        y: isMobile.matches ? 20 : 30,
-        duration: isMobile.matches ? 0.68 : 0.86,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 84%"
-        }
-      });
-    });
-
-    gsap.utils.toArray(".reveal-card").forEach((el, index) => {
-      gsap.from(el, {
-        opacity: 0,
-        y: isMobile.matches ? 18 : 30,
-        duration: isMobile.matches ? 0.64 : 0.84,
-        delay: (index % (isMobile.matches ? 2 : 4)) * 0.03,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 86%"
-        }
-      });
-    });
-
-    gsap.from(".gallery-reveal", {
-      opacity: 0,
-      y: isMobile.matches ? 18 : 28,
-      duration: isMobile.matches ? 0.64 : 0.86,
-      stagger: isMobile.matches ? 0.045 : 0.08,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: "#gallery",
-        start: "top 72%"
-      }
-    });
-
-    gsap.utils.toArray(".parallax-media img").forEach((img) => {
-      gsap.to(img, {
-        yPercent: isMobile.matches ? 2 : 5,
-        ease: "none",
-        scrollTrigger: {
-          trigger: img.parentElement,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true
-        }
-      });
-    });
-
-    gsap.utils.toArray(".parallax-shape").forEach((shape, index) => {
-      gsap.to(shape, {
-        yPercent: index % 2 === 0 ? (isMobile.matches ? -7 : -18) : (isMobile.matches ? 7 : 18),
-        ease: "none",
-        scrollTrigger: {
-          trigger: shape.closest(".section") || ".hero",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true
-        }
-      });
-    });
-
-    gsap.from(".review", {
-      opacity: 0,
-      y: isMobile.matches ? 20 : 34,
-      duration: isMobile.matches ? 0.68 : 0.9,
-      stagger: isMobile.matches ? 0.075 : 0.12,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: "#reviews",
-        start: "top 72%"
-      }
-    });
-
-    faqItems.forEach((item) => {
-      const answer = item.querySelector(".faq-answer");
-      if (item.classList.contains("active")) {
-        gsap.set(answer, { height: "auto" });
-      }
-    });
-
-    faqItems.forEach((item) => {
-      const button = item.querySelector(".faq-question");
-      const answer = item.querySelector(".faq-answer");
-
-      button.addEventListener("click", () => {
-        const isActive = item.classList.contains("active");
-
-        faqItems.forEach((other) => {
-          if (other === item) return;
-          other.classList.remove("active");
-          gsap.to(other.querySelector(".faq-answer"), {
-            height: 0,
-            duration: 0.38,
-            ease: "power3.out"
-          });
-        });
-
-        item.classList.toggle("active", !isActive);
-        gsap.to(answer, {
-          height: isActive ? 0 : "auto",
-          duration: 0.42,
-          ease: "power3.out"
-        });
-      });
-    });
-
-    document.querySelectorAll(".gallery-item").forEach((item) => {
-      const img = item.querySelector("img");
-      item.addEventListener("click", () => {
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
-        lightbox.classList.add("open");
-        lightbox.setAttribute("aria-hidden", "false");
-        gsap.fromTo(".lightbox-inner", { opacity: 0, y: 18, scale: 0.98 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "power3.out" });
-      });
-    });
-
-    function closeLightbox() {
-      gsap.to(".lightbox-inner", {
-        opacity: 0,
-        y: 14,
-        scale: 0.99,
-        duration: 0.2,
-        ease: "power2.in",
-        onComplete: () => {
-          lightbox.classList.remove("open");
-          lightbox.setAttribute("aria-hidden", "true");
-          lightboxImg.src = "";
-        }
-      });
-    }
-
-    lightboxClose.addEventListener("click", closeLightbox);
-    lightbox.addEventListener("click", (event) => {
-      if (event.target === lightbox) closeLightbox();
-    });
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && menuOpen) closeMenu();
-      if (event.key === "Escape" && lightbox.classList.contains("open")) closeLightbox();
+      if (window.innerWidth > 820) closeMenu();
+      ScrollTrigger.refresh();
     });
   </script>
 </body>
